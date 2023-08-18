@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize(Roles = "admin")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
