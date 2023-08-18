@@ -1,0 +1,41 @@
+.divider:after,
+.divider:before {
+content: "";
+flex: 1;
+height: 1px;
+background: #eee;
+}
+.h-custom {
+height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+.h-custom {
+height: 100%;
+}
+}
+
+.formContainer
+{
+    margin-top: 80px;
+    border: 2px solid #ccc;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    margin-right: 50px;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    background-color: #f4f4f4;
+    height: fit-content;
+
+}
+
+.addCusImage
+{
+    height: 40rem;
+    width: 40rem;
+    margin-left: 20px;
+}
+
+.addCusContainer
+{
+    display: flex;
+}

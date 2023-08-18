@@ -1,0 +1,116 @@
+body{
+	background-color: #eee;
+}
+.card{
+	background-color: #fff;
+	width: 650px;
+	border-radius: 33px;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	padding: 2rem !important;
+}
+
+.ml-3{
+    
+	align-items: center;
+}
+
+.name{
+	font-size: 25px;
+	font-weight: bold;
+    font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+	color: #272727;
+	position: relative;
+	top: 8px;
+}
+.acc-number{
+	font-size: 14px;
+	color: grey;
+	position: relative;
+	top: 2px;
+}
+.middle-container{
+	background-color: #eee;
+	border-radius: 12px;
+
+}
+.middle-container:hover {
+	border: 1px solid #5957f9;
+}
+.dollar-div{
+	background-color: #5957f9;
+	padding: 12px;
+	border-radius: 10px;
+}
+.round-div{
+	border-radius: 50%;
+	width: 35px;
+	height: 35px;
+	background-color: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+.rupees{
+	font-size: 16px !important;
+	color: #5957f9 !important;
+	font-weight: bold !important;
+}
+
+
+.current-balance{
+	font-size: 15px;
+	color: #272727;
+	font-weight: bold;
+}
+.amount{
+	color: #5957f9;
+	font-size: 16px;
+	font-weight: bold;
+}
+.dollar-sign{
+	font-size: 16px;
+	color: #272727;
+	font-weight: bold;
+}
+
+
+.recent-border:hover {
+    padding-bottom: 15px;
+}
+
+
+
+.recent-border{
+	font-size: 16px;
+	font-weight: 700;
+	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+	padding-bottom: 15px;
+    border-left: 2px solid #5957f9;
+	border-bottom: 1px solid #dee2e6!important;
+    color: #5957f9;
+}
+
+.account-type{
+    padding-top: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	display: flex;
+
+}
+.account-type:hover{
+	border-bottom: 1px solid #dee2e6!important;
+    
+    
+}
+.card-number{
+    padding-top: 10px;
+	font-size: 16px;
+	font-weight: 700;
+	display: flex;
+}
+.card-number-border:hover {
+	border-bottom: 1px solid #dee2e6!important;
+    
+    
+}

@@ -1,0 +1,70 @@
+import React, { Component } from 'react';
+import '../styles/customerData.css'
+import CustomerDetailsRow from './CustomerDetailsRow';
+import {useState} from 'react';
+export default function CustomerData(){
+    
+
+    
+        var [isShown, setIsShown] = useState(false);
+
+        var handleClick = event => {
+            setIsShown(current => !current);            
+        };
+        const amount = 353652;
+
+        const formatter = new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency: "INR",
+        });
+        //const { accountNumber, customerId, accountBalance } = this.state.customerData;
+    
+        return (
+    <div class="container d-flex justify-content-center mt-5">
+
+	<div class="card">
+		
+		<div class="top-container">
+			
+			{/* <img src="https://i.imgur.com/G1pXs7D.jpg" class="img-fluid profile-image" width="70"/> */}
+			
+			<div class="ml-3">
+				<h5 class="name">James Rooney</h5>
+				<p class="acc-number">Acc Number: 12257347032</p>
+			</div>
+		</div>
+
+
+		<div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
+				<div class="dollar-div px-3">
+					
+					<div class="round-div">
+                        <span class="rupees"> &#8377;</span>
+                        </div>
+
+				</div>
+				<div class="d-flex flex-column text-right mr-2">
+					<span class="current-balance">Current Balance</span>
+					<span class="amount"><span class="dollar-sign"></span>{formatter.format(amount)}</span>
+				</div>
+
+		</div>
+
+		<div class="recent-border mt-4">
+			<span class="recent-orders" onClick = {handleClick}>Recent Transactions</span>
+            
+            {isShown ? <CustomerDetailsRow/> : null}
+		</div>
+		<div class="account-type-border pt-2">
+			<span class="account-type">Account Type: Savings</span>
+		</div>
+		<div class="card-number-border pt-2">
+			<span class="card-number">Card Number: 123-656-989-686</span>
+		</div>
+		
+	</div>
+	
+    </div>
+    );
+    
+}

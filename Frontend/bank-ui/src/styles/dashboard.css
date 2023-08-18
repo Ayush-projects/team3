@@ -1,0 +1,71 @@
+.dashboard {
+    text-align: center;
+    margin-top: 50px;
+  }
+  
+ /* ... Other existing CSS rules ... */
+
+/* ... Other existing CSS rules ... */
+
+/* ... Other existing CSS rules ... */
+
+/* ... Other existing CSS rules ... */
+
+.dashboard-1 {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .widget {
+    border: 2px solid #ccc;
+    padding: 20px;
+    margin: 10px;
+    width: 300px;
+    height: 220px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    margin-top: 50px;
+  }
+  
+  /* Update icon size and centering */
+  .widget svg {
+    display: block;
+    margin: 0 auto; /* Center the icon horizontally */
+    font-size: 36px; /* Increase the icon size */
+  }
+  
+  /* ... Rest of the CSS ... */
+  
+  
+  /* ... Rest of the CSS ... */
+    
+  /* Shift the leftmost widget toward center */
+  .widget:first-child {
+    margin-left: 80px; /* Adjust the margin as needed */
+  }
+  
+  /* Shift the rightmost widget toward center */
+  .widget:last-child {
+    margin-right: 80px; /* Adjust the margin as needed */
+  }
+  
+  /* ... Rest of the CSS ... */
+    
+  
+  /* ... Rest of the CSS ... */
+  
+  
+  .widget:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f8f8; /* Change color on hover */
+  }
+  
+
+
+.widget-text
+{
+    margin-top: 40px;
+}
