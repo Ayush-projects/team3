@@ -13,6 +13,9 @@ import CustomerDashboard from './components/CustomerDashboard'
 import Notification  from './components/Notification';
 import AddCustomer from './components/AddCustomer';
 import AddAccout from './components/AddAccount';
+import CashDeposit from './components/CashDeposit';
+import CashWithdraw from './components/CashWithdraw';
+import FundTransfer from './components/FundTransfer';
 
 function App() {
   return (
@@ -30,6 +33,9 @@ function App() {
       <Route path = "/custDash" element = {<CustomerDashboard/>} />
       <Route path = "/addCust" element = {<AddCustomer/>}/>
       <Route path ="/addAccount" element ={<AddAccout/>}/>
+      <Route path = "/cdep" element = {<CashDeposit/>}/>
+      <Route path = "cwith" element = {<CashWithdraw/>}/>
+      <Route path = "fundtrans" element = {<FundTransfer/>}/>
     </Routes>
     </BrowserRouter>
     <Footer></Footer>

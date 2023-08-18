@@ -26,9 +26,9 @@ function DashboardHeader () {
                 type ='button' data-bs-toggle ='dropdown'>Add Transaction</button>
                 
                 <ul class ="dropdown-menu">
-                    <li><a class ="dropdown-item">Withdrawal</a></li>
-                    <li><a class ="dropdown-item">Deposit</a></li>
-                    <li><a class ="dropdown-item">Transfer</a></li>
+                    <li><a class ="dropdown-item" href ='/cwith'>Withdrawal</a></li>
+                    <li><a class ="dropdown-item" href = '/cdep'>Deposit</a></li>
+                    <li><a class ="dropdown-item" href = '/fundtrans'>Transfer</a></li>
                 </ul>
                 
                 

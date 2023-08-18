@@ -4,7 +4,7 @@ import { NotificationManager } from 'react-notifications';
 import svgImage from '../assets/addcus.svg';
 import axios from 'axios'
 import Login from './Login'
-
+import DashboardHeader from "./DashboardHeader";
 export default function AddCustomer()
 {
 
@@ -96,6 +96,7 @@ export default function AddCustomer()
 
     return (
         <>
+        <DashboardHeader></DashboardHeader>
         <div className="addCusContainer">
         <img className = 'addCusImage' src = {svgImage} alt = 'sample-image2'/>
         <div class = 'container w-50 formContainer'>

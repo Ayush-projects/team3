@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 import '../styles/customerData.css'
 import CustomerDetailsRow from './CustomerDetailsRow';
 import {useState} from 'react';
-
-export default function CustomerData({name, accountNumber, type, cardNumber, balance}){
+import axios from 'axios';
+import Login from './Login'
+import DashboardHeader from './DashboardHeader';
+export default function CustomerData(){
     
 
     
@@ -17,8 +19,12 @@ export default function CustomerData({name, accountNumber, type, cardNumber, bal
           style: "currency",
           currency: "INR",
         });
-        
+        //const { accountNumber, customerId, accountBalance } = this.state.customerData;
+    let isLoggedIn = localStorage.getItem("isLoggedIn")
+	if(isLoggedIn=="true"){
         return (
+			<>
+			<DashboardHeader></DashboardHeader>
     <div class="container d-flex justify-content-center mt-5">
 
 	<div class="card">
@@ -64,6 +70,11 @@ export default function CustomerData({name, accountNumber, type, cardNumber, bal
 	</div>
 	
     </div>
+	</>
     );
+		}else
+		{
+			return <><Login></Login></>
+		}
     
 }
