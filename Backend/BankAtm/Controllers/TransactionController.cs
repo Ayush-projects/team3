@@ -50,7 +50,24 @@ namespace BankAtm.Controllers
             }catch(Exception ex) { throw; }
             
         }
+        [HttpGet, Route("GetTransactionsByType")]
+        public IActionResult GetTransactionsByType(string transtype)
+        {
+            transtype = transtype.ToLower();
+            try
+            {
 
+                if (transtype.Equals("deposite") == true || transtype.Equals("withdraw") == true)
+                {
+                    List<Transaction> transactions = _transactionService.GetTransactionByType(transtype);
+                    return StatusCode(200, transactions);
+                }
+                return StatusCode(201, new JsonResult("Enter 'deposite' or 'withdraw'"));
+
+            }
+            catch (Exception ex) { throw; }
+
+        }
         [HttpGet, Route("GetTransactionsByAccNum")]
         public IActionResult GettTransactionsByAccNum(int AccNum)
         {

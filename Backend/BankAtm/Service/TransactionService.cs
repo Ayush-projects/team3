@@ -63,7 +63,10 @@ namespace BankAtm.Service
         {
             throw new NotImplementedException();
         }
-
+        public List<Transaction> GetTransactionByType(string transtype)
+        {
+            return (from transaction in _transactionContext.Transactions where transaction.TransType == transtype select transaction).ToList();
+        }
         public List<Transaction> GetAllTransactions()
         {
            return _transactionContext.Transactions.ToList();
