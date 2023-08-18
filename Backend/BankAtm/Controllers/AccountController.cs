@@ -1,13 +1,14 @@
 ﻿using BankAtm.DTOS;
 using BankAtm.Entities;
 using BankAtm.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
 namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize(Roles ="admin")]
     public class AccountController : ControllerBase
     {
 

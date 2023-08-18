@@ -1,14 +1,12 @@
 ﻿using BankAtm.DTOS;
 using BankAtm.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
 
 namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
+    [ApiController, Authorize(Roles = "admin")]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;

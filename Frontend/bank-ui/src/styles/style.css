@@ -39,3 +39,17 @@ height: 100%;
 {
     display: flex;
 }
+
+
+.withdContainer
+{
+    margin-top: 80px;
+    border: 2px solid #ccc;
+    padding: 20px 20px 20px 20px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    background-color: #f4f4f4;
+    height: fit-content;
+
+}
