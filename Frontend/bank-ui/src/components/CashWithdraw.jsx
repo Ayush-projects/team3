@@ -5,6 +5,8 @@ import svgImage from '../assets/addcus.svg';
 import { useNavigate } from "react-router";
 import Login from "./Login";
 import DashboardHeader from "./DashboardHeader";
+import axios from 'axios'
+
 
 export default function CashWithdraw()
 {
@@ -39,15 +41,45 @@ export default function CashWithdraw()
             return NotificationManager.error("Please fill the complete form ","Error",4000);
         }
 
-        if(formData.accnum<16)
+        if(formData.accnum.length<16)
         return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
 
-        else
-        {   
-            navigate('/');
-            return NotificationManager.success('Account added successfully',"Success","4000");
-            
-        }
+       
+        let {accnum,amount} = formData;
+        
+    
+        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Withdraw",accNum2:accnum,amount:amount})
+        .then((response) => {
+          console.log(response)
+
+          if(response.status==200)
+          {
+            NotificationManager.success("Amount successfully withdrawn", "Success", 10000);
+                     
+             setTimeout(()=>{
+               window.location.reload()
+             }, 6000)
+          }
+          else
+  
+          {
+          
+            NotificationManager.error(response.data.value, "Error", 30000);
+          }
+  
+  
+  
+  
+  
+        } ).catch((err)=>{
+            console.log(err)
+         if(err.response.data.value)
+         {
+            NotificationManager.error(err.response.data.value, "Error", 30000);
+         }
+         else
+          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 30000);
+        });
 
 
         

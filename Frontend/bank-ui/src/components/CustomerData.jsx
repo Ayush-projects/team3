@@ -5,7 +5,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import Login from './Login'
 import DashboardHeader from './DashboardHeader';
-export default function CustomerData(){
+export default function CustomerData({name, accountNumber, balance, type, cardNumber}){
     
 
     
