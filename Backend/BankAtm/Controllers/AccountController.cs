@@ -36,7 +36,8 @@ namespace BankAtm.Controllers
                 return StatusCode(200, account);
 
             }
-            catch (Exception ex) { return StatusCode(201, new JsonResult("Either Customer with such ID doesn't exists or Account Number already exists")); }
+            catch (Exception ex) { 
+                return StatusCode(201, new JsonResult(ex.ToString())); }
         }
         [HttpGet, Route("GetAccountById")]
         public IActionResult GetAccountById(int id)

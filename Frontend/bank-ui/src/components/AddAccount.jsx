@@ -46,6 +46,7 @@ export default function AddAccout()
         if(formData.balance<1000)
         return NotificationManager.error("Inital balance must be atleast 1000","Error","4000");
        let { id,accType , cardNo, cardName, balance} = formData
+       console.log(formData)
     
         axios.post("https://localhost:5000/api/Account/AddAccount",{ id,accType , cardNo, cardName, balance})
         .then((response) => {
@@ -53,7 +54,7 @@ export default function AddAccout()
             
           if(response.status==200)
           {
-            NotificationManager.success("Account Successfully Added with Account Number:" + response.data.accNum, "Success", 1000);
+            NotificationManager.success("Account Successfully Added with Account Number:" + response.data.accNum, "Success", 10000);
           
            
              setTimeout(()=>{
@@ -64,7 +65,7 @@ export default function AddAccout()
   
           {
           
-            NotificationManager.error(response.data.value, "Error", 6000);
+            NotificationManager.error(response.data.value, "Error", 30000);
           }
   
   
@@ -75,10 +76,10 @@ export default function AddAccout()
             console.log(err)
          if(err.response.data.value)
          {
-            NotificationManager.error(err.response.data.value, "Error", 4000);
+            NotificationManager.error(err.response.data.value, "Error", 30000);
          }
          else
-          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
+          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 30000);
         });
         
         

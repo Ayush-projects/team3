@@ -23,7 +23,7 @@ namespace BankAtm.Entities
         public string AccType{ get; set; }
 
         [Required]
-        public long CardNo { get; set; }
+        public string CardNo { get; set; }
 
         [Required]
         [StringLength(20)]

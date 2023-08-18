@@ -40,8 +40,9 @@ namespace BankAtm.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("varchar(20)");
 
-                    b.Property<long>("CardNo")
-                        .HasColumnType("bigint");
+                    b.Property<string>("CardNo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
