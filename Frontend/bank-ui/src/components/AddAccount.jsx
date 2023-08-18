@@ -4,6 +4,8 @@ import { NotificationManager } from 'react-notifications';
 import svgImage from '../assets/addcus.svg';
 import { useNavigate } from "react-router";
 import axios from 'axios'
+import Login from './Login'
+import DashboardHeader from "./DashboardHeader";
 export default function AddAccout()
 {
 
@@ -82,10 +84,15 @@ export default function AddAccout()
         
     }
 
+ 
+    let isLoggedIn = localStorage.getItem("isLoggedIn")
 
-
+    if(isLoggedIn=="true"){
     return (
+        <>
+        <DashboardHeader></DashboardHeader>
         <div className="addCusContainer">
+         
         <img className = 'addCusImage' src = {svgImage} alt = 'sample-image2'/>
         <div class = 'container w-50 formContainer'>
         
@@ -152,6 +159,10 @@ export default function AddAccout()
   </form>
         </div>
         </div>
+        </>
 
-    );
+    );}
+    else{
+        return <><Login/></>
+    }
 }
