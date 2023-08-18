@@ -14,8 +14,7 @@ export default function CustomerData(){
         var handleClick = event => {
             setIsShown(current => !current);            
         };
-        const amount = 353652;
-
+        
         const formatter = new Intl.NumberFormat("en-US", {
           style: "currency",
           currency: "INR",
@@ -35,8 +34,8 @@ export default function CustomerData(){
 			{/* <img src="https://i.imgur.com/G1pXs7D.jpg" class="img-fluid profile-image" width="70"/> */}
 			
 			<div class="ml-3">
-				<h5 class="name">James Rooney</h5>
-				<p class="acc-number">Acc Number: 12257347032</p>
+				<h5 class="name">{name}</h5>
+				<p class="acc-number">Acc Number: {accountNumber}</p>
 			</div>
 		</div>
 
@@ -51,7 +50,7 @@ export default function CustomerData(){
 				</div>
 				<div class="d-flex flex-column text-right mr-2">
 					<span class="current-balance">Current Balance</span>
-					<span class="amount"><span class="dollar-sign"></span>{formatter.format(amount)}</span>
+					<span class="amount"><span class="dollar-sign"></span>{formatter.format(balance)}</span>
 				</div>
 
 		</div>
@@ -62,10 +61,10 @@ export default function CustomerData(){
             {isShown ? <CustomerDetailsRow/> : null}
 		</div>
 		<div class="account-type-border pt-2">
-			<span class="account-type">Account Type: Savings</span>
+			<span class="account-type">Account Type: {type}</span>
 		</div>
 		<div class="card-number-border pt-2">
-			<span class="card-number">Card Number: 123-656-989-686</span>
+			<span class="card-number">Card Number: {cardNumber}</span>
 		</div>
 		
 	</div>
