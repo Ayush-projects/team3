@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import CustomerData from './CustomerData';
+import SearchBar from './SearchBar';
 // Styled components
 const PageContainer = styled.div`
   text-align: center;
@@ -33,7 +34,8 @@ class CustomerBankingDataPage extends Component {
     return (
       <PageContainer>
         
-        <CustomerData/>
+        {/* <CustomerData/> */}
+        <SearchBar/>
       </PageContainer>
     );
   }
