@@ -47,10 +47,17 @@ export default function CashWithdraw()
        
         let {accnum,amount} = formData;
         
-    
-        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Withdraw",accNum2:accnum,amount:amount})
+        let token = localStorage.getItem("token")
+        
+        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Withdraw",accNum2:accnum,amount:amount},{
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
         .then((response) => {
           console.log(response)
+
+          
 
           if(response.status==200)
           {

@@ -85,7 +85,7 @@ export default function AddCustomer()
   
   
         } ).catch((err)=>{
-         
+         console.log(err)
           NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
         });
      
