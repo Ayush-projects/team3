@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import CustomerData from './CustomerData';
 import SearchBar from './SearchBar';
+import DashboardHeader  from './DashboardHeader';
 // Styled components
 const PageContainer = styled.div`
   text-align: center;
@@ -33,7 +34,7 @@ class CustomerBankingDataPage extends Component {
 
     return (
       <PageContainer>
-        
+        <DashboardHeader></DashboardHeader>
         {/* <CustomerData/> */}
         <SearchBar/>
       </PageContainer>
