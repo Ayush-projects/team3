@@ -5,6 +5,7 @@ import svgImage from '../assets/addcus.svg';
 import { useNavigate } from "react-router";
 import DashboardHeader from "./DashboardHeader";
 import Login from "./Login";
+import axios from 'axios'
 
 export default function FundTransfer()
 {
@@ -137,7 +138,7 @@ if(isLoggedIn){
 
         </div>
       
- 
+ <br></br>
         <div class="d-grid gap-2 col-6 mx-auto btnpp">
 
         <button type="submit" class="btn btn-primary" onClick={handleSubmit}>Submit</button>

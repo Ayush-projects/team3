@@ -23,12 +23,13 @@ function DashboardHeader () {
                 <a href = '/custDash'> <button className='dashbord-header-btn' >View Customer Data</button> </a>
                 <a href = '/addAccount'><button className='dashbord-header-btn' >Add Account</button></a>
                 <a href = '/addAccount'><button className='dashbord-header-btn dropdown-toggle' 
-                type ='button' data-bs-toggle ='dropdown'>Add Transaction</button>
+                type ='button' data-bs-toggle ='dropdown'>Options</button>
                 
                 <ul class ="dropdown-menu">
                     <li><a class ="dropdown-item" href ='/cwith'>Withdrawal</a></li>
                     <li><a class ="dropdown-item" href = '/cdep'>Deposit</a></li>
                     <li><a class ="dropdown-item" href = '/fundtrans'>Transfer</a></li>
+                    <li><a class ="dropdown-item" href = '/pinChange'>Pin Change</a></li>
                 </ul>
                 
                 

@@ -16,6 +16,7 @@ import AddAccout from './components/AddAccount';
 import CashDeposit from './components/CashDeposit';
 import CashWithdraw from './components/CashWithdraw';
 import FundTransfer from './components/FundTransfer';
+import PinChange from './components/PinChange';
 
 function App() {
   return (
@@ -34,8 +35,10 @@ function App() {
       <Route path = "/addCust" element = {<AddCustomer/>}/>
       <Route path ="/addAccount" element ={<AddAccout/>}/>
       <Route path = "/cdep" element = {<CashDeposit/>}/>
-      <Route path = "cwith" element = {<CashWithdraw/>}/>
-      <Route path = "fundtrans" element = {<FundTransfer/>}/>
+      <Route path = "/cwith" element = {<CashWithdraw/>}/>
+      <Route path = "/fundtrans" element = {<FundTransfer/>}/>
+      <Route path = "/pinChange" element = {<PinChange/>}/>
+
     </Routes>
     </BrowserRouter>
     <Footer></Footer>
