@@ -44,23 +44,33 @@ namespace BankAtm.Service
                 }
                 else
                 {
-                    if (transaction.AccNum == transaction.ToAccNum)
+                    if(transaction.TransType.Equals("Transfer"))
                     {
                         if (acc.Balance < transaction.Amount)
                         {
                             throw new Exception("Insufficient Balance");
                         }
-                        acc.Balance = acc.Balance + transaction.Amount;
+                        acc.Balance = acc.Balance - transaction.Amount;
+                        Toacc.Balance = Toacc.Balance + transaction.Amount;
                     }
                     else
                     {
-                        if (Toacc.Balance < transaction.Amount)
+                        if (transaction.AccNum == transaction.ToAccNum)
                         {
-                            throw new Exception("Insuffiecient Balance");
+
+                            acc.Balance = acc.Balance + transaction.Amount;
                         }
-                        acc.Balance = acc.Balance + transaction.Amount;
-                        Toacc.Balance = Toacc.Balance - transaction.Amount;
+                        else
+                        {
+                            if (Toacc.Balance < transaction.Amount)
+                            {
+                                throw new Exception("Insuffiecient Balance");
+                            }
+                            acc.Balance = acc.Balance + transaction.Amount;
+                            Toacc.Balance = Toacc.Balance - transaction.Amount;
+                        }
                     }
+                    
                     
                 }
                 _transactionContext.Accounts.Update(acc);
@@ -98,9 +108,15 @@ namespace BankAtm.Service
            return _transactionContext.Transactions.ToList();
         }
 
-        public List<Transaction> GetTransactionByAccNo(int accnum)
+        public List<Transaction> GetLast10Transactions()
         {
-            return (from transaction in _transactionContext.Transactions where transaction.AccNum==accnum select transaction).ToList();
+            return _transactionContext.Transactions.Take(10)
+                .OrderByDescending(t=>t.TransDateTime).ToList();
+        }
+
+        public List<Transaction> GetTransactionByAccNo(long accnum)
+        {
+            return (from transaction in _transactionContext.Transactions where transaction.AccNum==accnum ||  transaction.ToAccNum == accnum select transaction).ToList();
         }
 
         public Transaction GetTransactionByTransId(Guid TransId)

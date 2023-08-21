@@ -19,6 +19,17 @@ namespace BankAtm.Controllers
             _transactionService = transactionService;
         }
 
+        [HttpGet, Route("GetLast10Transactions")]
+        public IActionResult GetLast10Transactions()
+        {
+            try
+            {
+                List<Transaction> transactions = _transactionService.GetLast10Transactions();
+                return StatusCode(200, transactions);
+            }
+            catch (Exception ex) { throw; }
+        }
+
         [HttpPost,Route("AddTransaction")]
         public IActionResult AddNewTransaction(TransactionDTO transactionDTO)
         {
@@ -69,7 +80,7 @@ namespace BankAtm.Controllers
 
         }
         [HttpGet, Route("GetTransactionsByAccNum")]
-        public IActionResult GettTransactionsByAccNum(int AccNum)
+        public IActionResult GetTransactionsByAccNum(long AccNum)
         {
             try
             {

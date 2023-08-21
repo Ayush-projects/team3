@@ -7,16 +7,17 @@ import DashboardHeader from "./DashboardHeader";
 import Login from "./Login";
 import axios from 'axios'
 
-export default function FundTransfer()
+export default function PinChange()
 {
 
     let isLoggedIn = localStorage.getItem("isLoggedIn");
 
     const [formData,setFormData] = useState({
-        faccnum : '',
-        transtype: '',
-        taccnum: '',
-        amount: ''
+        accNum: '',
+       oldPin: '',
+       newPin: '',
+       confirmNewPin: '',
+       cardNo: ''
     });
 
     const navigate = useNavigate();
@@ -42,17 +43,17 @@ export default function FundTransfer()
             return NotificationManager.error("Please fill the complete form ","Error",4000);
         }
 
-        if(formData.faccnum<16)
-        return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
+      if(formData.newPin != formData.confirmNewPin)
+      {
+        return NotificationManager.error("New Password and Confirm New Password Not Matching ","Error",4000);
+      }
+ 
 
-        else if(formData.taccnum<16)
-        return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
-
-        let {faccnum,taccnum,amount} = formData;
+       let {accNum, cardNo, oldPin, newPin, confirmNewPin} = formData
         
         let token = localStorage.getItem("token");
     
-        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:faccnum,transType:"Transfer",accNum2:taccnum,amount:amount},{
+        axios.put("https://localhost:5000/api/Account/UpdateAtmPin",{ accNum, cardNo, atmPin: oldPin, newPin: confirmNewPin},{
           headers : {
             'Authorization' : 'Bearer ' + token
           }
@@ -62,7 +63,7 @@ export default function FundTransfer()
 
           if(response.status==200)
           {
-            NotificationManager.success("Amount successfully transferred", "Success", 10000);
+            NotificationManager.success("Pin Changed Successfully", "Success", 10000);
                      
              setTimeout(()=>{
                window.location.reload()
@@ -96,44 +97,55 @@ if(isLoggedIn){
         <div className="addCusContainer">
             
             <div class = 'container w-50 withdContainer'>
-                <h3> Funds Transfer</h3>
+                <h3>Pin Change</h3>
     <form>
         <div>
         <div class="col ">
-            <label for="Name1" class="form-label">From Account number</label>
-            <input type="text" class="form-control "  id="faccnum"
+            <label for="Name1" class="form-label">Account Number</label>
+            <input type="accNum" class="form-control "  id="faccnum"
             onChange={handleInputChange}
-            name = "faccnum"
-            value = {formData.faccnum}
+            name = "accNum"
+            value = {formData.accNum}
+             />
+        </div>  
+
+        <div class="col ">
+            <label for="Name1" class="form-label">Card Number</label>
+            <input type="accNum" class="form-control "  id="faccnum"
+            onChange={handleInputChange}
+            name = "cardNo"
+            value = {formData.cardNo}
+             />
+        </div>  
+
+
+        <div class="col ">
+            <label for="Name1" class="form-label">Old Pin</label>
+            <input type="password" class="form-control "  id="faccnum"
+            onChange={handleInputChange}
+            name = "oldPin"
+            value = {formData.oldPin}
              />
         </div>
 
         <div class="col ">
-            <label for="Name1" class="form-label">Transaction type</label>
-            <input type="text" class="form-control "  id="transtype"
+            <label for="Name1" class="form-label">New Pin</label>
+            <input type="password" class="form-control "  id="transtype"
             onChange={handleInputChange}
-            name = "transtype"
-            value = {formData.transtype}
+            name = "newPin"
+            value = {formData.newPin}
              />
         </div>
 
         <div class="col w-50">
-            <label for="Address" class="form-label">To account number</label>
-            <input type="text" class="form-control " id="taccnum" 
+            <label for="Address" class="form-label">Confirm New Pin</label>
+            <input type="password" class="form-control " id="taccnum" 
             onChange={handleInputChange}
-            name = "taccnum"
-            value = {formData.taccnum}
+            name = "confirmNewPin"
+            value = {formData.confirmNewPin}
             />
         </div>
 
-        <div class="col w-50">
-            <label for="Address" class="form-label">Amount</label>
-            <input type="text" class="form-control " id="taccnum" 
-            onChange={handleInputChange}
-            name = "amount"
-            value = {formData.amount}
-            />
-        </div>
 
 
         </div>
@@ -161,4 +173,3 @@ if(isLoggedIn){
         }
 
 }
-

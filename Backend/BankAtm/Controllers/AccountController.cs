@@ -126,7 +126,21 @@ namespace BankAtm.Controllers
             {
                 return StatusCode(201, new JsonResult("Invalid Account Number"));
             }
-            return StatusCode(201, new JsonResult("Invalid Account Number"));
+            Account acc = _accountService.GetAccountByCardNum(changePinDTO.CardNo);
+            if (acc == null)
+            {
+                return StatusCode(201, new JsonResult("Invalid Card Number"));
+            }
+            if(account.AtmPin.Equals(changePinDTO.AtmPin)==false) {
+                return StatusCode(201, new JsonResult("wrong pin"));
+            }
+            if(changePinDTO.NewPin.Length!=4)
+            {
+                return StatusCode(201, new JsonResult("pin should be 4 digits"));
+            }
+            account.AtmPin = changePinDTO.NewPin;
+            _accountService.UpdatePin(account);
+            return StatusCode(200, account);
         }
 
         private static Random RNG = new Random();

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BankAtm.Migrations
 {
-    public partial class Newdatabase : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,7 +47,8 @@ namespace BankAtm.Migrations
                     AccType = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
                     CardNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CardName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
-                    Balance = table.Column<int>(type: "int", nullable: false)
+                    Balance = table.Column<int>(type: "int", nullable: false),
+                    AtmPin = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false)
                 },
                 constraints: table =>
                 {

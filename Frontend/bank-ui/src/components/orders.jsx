@@ -61,10 +61,10 @@ function Orders () {
 
                 <table>
                     <thead>
-                        <th>Account Number</th>
-                        <th>Date</th>
+                        <th>From</th>
+                        <th>To </th>
                         <th>Status</th>
-                        <th>Costumer Name</th>
+                        <th>Date</th>
                         
                         <th>Amount</th>
                     </thead>

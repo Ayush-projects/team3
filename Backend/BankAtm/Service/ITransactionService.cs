@@ -6,8 +6,9 @@ namespace BankAtm.Service
     {
         void AddTransaction(Transaction transaction);
         List<Transaction> GetAllTransactions();
+        List<Transaction> GetLast10Transactions();
         List<Transaction> GetTransactionByType(string transtype);
-        List<Transaction> GetTransactionByAccNo(int TransId);
+        List<Transaction> GetTransactionByAccNo(long accNo);
         Transaction GetTransactionByTransId(Guid TransId);
         void UpdateTransaction(Transaction transaction);
         void DeleteTransaction(string TransId);
