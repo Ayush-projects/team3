@@ -95,6 +95,12 @@ namespace BankAtm.Service
            return _transactionContext.Transactions.ToList();
         }
 
+        public List<Transaction> GetLast10Transactions()
+        {
+            return _transactionContext.Transactions.Take(10)
+                .OrderByDescending(t=>t.TransDateTime).ToList();
+        }
+
         public List<Transaction> GetTransactionByAccNo(long accnum)
         {
             return (from transaction in _transactionContext.Transactions where transaction.AccNum==accnum ||  transaction.ToAccNum == accnum select transaction).ToList();
