@@ -12,7 +12,7 @@ namespace BankAtm.Entities
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer("Server=Anshuman-pc\\MSSQLSERVER01;Database=BankData;trusted_Connection=True");
+            optionsBuilder.UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankData;trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

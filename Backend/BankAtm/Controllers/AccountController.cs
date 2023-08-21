@@ -8,8 +8,8 @@ using System.Text;
 namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController, Authorize(Roles ="admin")]
-//[ApiController]
+    //[ApiController, Authorize(Roles ="admin")]
+[ApiController]
     public class AccountController : ControllerBase
     {
 
@@ -26,6 +26,12 @@ namespace BankAtm.Controllers
             {
                 return StatusCode(201, new JsonResult("Invalid card number"));
             }
+
+            if (accountDTO.AtmPin.Length != 4)
+            {
+                return StatusCode(201, new JsonResult("Invalid Atm Pin"));
+            }
+
             try
             {
                 Account account = new Account()
@@ -35,7 +41,7 @@ namespace BankAtm.Controllers
                    Balance = accountDTO.Balance,
                    CardName = accountDTO.CardName,
                    CardNo = accountDTO.CardNo,
-                   
+                   AtmPin= accountDTO.AtmPin,
                 };
                 account.AccNum = GenerateAccNum(account.AccType, accountDTO.Id);
                 _accountService.AddAccountDetails(account);

@@ -33,6 +33,9 @@ namespace BankAtm.Entities
         [Required]
         public int Balance { get; set; }
 
+        [Required]
+        [StringLength(4)]
+        public string AtmPin { get; set; }
         
 
     }
