@@ -1,46 +1,55 @@
 import React, {useState, useEffect} from 'react';
 import DashboardHeader from './DashboardHeader';
 
-import all_trans from '../constants/orders';
+
 import {calculateRange, sliceData} from '../utils/table-pagination';
 
 import '../styles/styles.css';
 import DoneIcon from '../assets/icons/done.svg';
 import CancelIcon from '../assets/icons/cancel.svg';
 import RefundedIcon from '../assets/icons/refunded.svg';
-
+import { NotificationManager } from 'react-notifications';
+import axios from 'axios'
 function Orders () {
-    const [search, setSearch] = useState('');
-    const [orders, setOrders] = useState(all_trans);
-    const [page, setPage] = useState(1);
-    const [pagination, setPagination] = useState([]);
+  
+    const [orders, setOrders] = useState('');
+    const [all_trans, set_all_trans] =  useState('')
 
     useEffect(() => {
-        setPagination(calculateRange(all_trans, 5));
-        setOrders(sliceData(all_trans, page, 5));
+   let token = localStorage.getItem("token")
+      axios.get("https://localhost:5000/api/Transaction/GetLast10Transactions", {
+        headers: {
+        
+            'Authorization': 'Bearer '+ token
+          }
+      }).then((response)=>{
+              
+        if(response.status==200)
+        {
+          NotificationManager.success("recent Transactions Fetched Successfully", "Success", 4000);
+          set_all_trans(response.data)
+        
+        }
+        else
+
+        {
+        
+          NotificationManager.error(response.data.value, "Error", 4000);
+        }
+
+
+
+
+
+      }).catch((err)=>{
+        console.log(err)
+         NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
+       });
+      
     }, []);
 
-    // Search
-    const __handleSearch = (event) => {
-        setSearch(event.target.value);
-        if (event.target.value !== '') {
-            let search_results = orders.filter((item) =>
-                item.first_name.toLowerCase().includes(search.toLowerCase()) ||
-                item.last_name.toLowerCase().includes(search.toLowerCase()) 
-                //item.product.toLowerCase().includes(search.toLowerCase())
-            );
-            setOrders(search_results);
-        }
-        else {
-            __handleChangePage(1);
-        }
-    };
 
-    // Change Page 
-    const __handleChangePage = (new_page) => {
-        setPage(new_page);
-        setOrders(sliceData(all_trans, new_page, 5));
-    }
+    
 
     return(
         <div className='dashboard-content'>
@@ -63,7 +72,7 @@ function Orders () {
                     <thead>
                         <th>From</th>
                         <th>To </th>
-                        <th>Status</th>
+                        <th>Type</th>
                         <th>Date</th>
                         
                         <th>Amount</th>
@@ -73,26 +82,28 @@ function Orders () {
                         <tbody>
                             {all_trans.map((order, index) => (
                                 <tr key={index}>
-                                    <td><span>{order.account_number}</span></td>
-                                    <td><span>{order.date}</span></td>
+                                    <td><span>{order.accNum}</span></td>
+                                    <td><span>{order.toAccNum}</span></td>
                                     <td>
                                         <div>
-                                            {order.status === 'Deposit' ?
-                                                <img
-                                                    src={DoneIcon}
-                                                    alt='paid-icon'
-                                                    className='dashboard-content-icon' />
-                                            : order.status === 'Withdrawl' ?
+                                            {/* {order.transType === 'Deposit' ?
+                                                // <img
+                                                //     src={DoneIcon}
+                                                //     alt='paid-icon'
+                                                //     className='dashboard-content-icon' />
+                                                <p>Deposit</p>
+                                            : order.status === 'Withdraw' ?
                                                 <img
                                                     src={CancelIcon}
                                                     alt='canceled-icon'
                                                     className='dashboard-content-icon' />
-                                            : null}
-                                            <span>{order.status}</span>
+                                            :  null} */}
+                                            {}
+                                            <span>{order.transType}</span>
                                         </div>
                                     </td>
                                     
-                                    <td><span>{order.first_name}</span></td>
+                                    <td><span>{order.transDateTime}</span></td>
                                     <td><span>${order.amount}</span></td>
                                 </tr>
                             ))}
@@ -100,22 +111,6 @@ function Orders () {
                     : null}
                 </table>
 
-                {orders.length !== 0 ?
-                    <div className='dashboard-content-footer'>
-                        {pagination.map((item, index) => (
-                            <span 
-                                key={index} 
-                                className={item === page ? 'active-pagination' : 'pagination'}
-                                onClick={() => __handleChangePage(item)}>
-                                    {item}
-                            </span>
-                        ))}
-                    </div>
-                : 
-                    <div className='dashboard-content-footer'>
-                        <span className='empty-table'>No data</span>
-                    </div>
-                }
             </div>
         </div>
     )
