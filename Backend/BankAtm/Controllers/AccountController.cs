@@ -8,8 +8,8 @@ using System.Text;
 namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
-    //[ApiController, Authorize(Roles ="admin")]
-[ApiController]
+    [ApiController, Authorize(Roles ="admin")]
+    //[ApiController]
     public class AccountController : ControllerBase
     {
 
@@ -116,6 +116,17 @@ namespace BankAtm.Controllers
 
             }
             catch (Exception ex) { throw; }
+        }
+
+        [HttpPut, Route("UpdateAtmPin")]
+        public IActionResult UpdatePin(ChangePinDTO changePinDTO)
+        {
+            Account account = _accountService.GetAccountByAccNo(changePinDTO.AccNum);
+            if(account==null)
+            {
+                return StatusCode(201, new JsonResult("Invalid Account Number"));
+            }
+            return StatusCode(201, new JsonResult("Invalid Account Number"));
         }
 
         private static Random RNG = new Random();

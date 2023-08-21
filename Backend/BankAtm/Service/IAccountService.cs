@@ -12,6 +12,6 @@ namespace BankAtm.Service
         void DeleteAccount(long accNo);
 
         int GetBalanceByAccNum(long accNo);
-        void UpdateBalance(Account account);
+        void UpdatePin(Account account);
     }
 }

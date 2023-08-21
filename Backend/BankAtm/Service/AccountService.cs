@@ -29,6 +29,11 @@ namespace BankAtm.Service
            return account;
         }
 
+        public Account GetAccountByCardNum(string  CardNum)
+        {
+            Account account = _customerContext.Accounts.FirstOrDefault(p=>p.CardNo == CardNum);
+            return account;
+        }
         public void DeleteAccount(long accNo)
         {
             try
@@ -69,7 +74,7 @@ namespace BankAtm.Service
             _customerContext.SaveChanges();
         }
 
-        public void UpdateBalance(Account account)
+        public void UpdatePin(Account account)
         {
             
         }
