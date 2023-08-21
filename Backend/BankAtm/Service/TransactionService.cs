@@ -44,20 +44,33 @@ namespace BankAtm.Service
                 }
                 else
                 {
-                    if (transaction.AccNum == transaction.ToAccNum)
+                    if(transaction.TransType.Equals("Transfer"))
                     {
-                       
-                        acc.Balance = acc.Balance + transaction.Amount;
+                        if (acc.Balance < transaction.Amount)
+                        {
+                            throw new Exception("Insufficient Balance");
+                        }
+                        acc.Balance = acc.Balance - transaction.Amount;
+                        Toacc.Balance = Toacc.Balance + transaction.Amount;
                     }
                     else
                     {
-                        if (Toacc.Balance < transaction.Amount)
+                        if (transaction.AccNum == transaction.ToAccNum)
                         {
-                            throw new Exception("Insuffiecient Balance");
+
+                            acc.Balance = acc.Balance + transaction.Amount;
                         }
-                        acc.Balance = acc.Balance + transaction.Amount;
-                        Toacc.Balance = Toacc.Balance - transaction.Amount;
+                        else
+                        {
+                            if (Toacc.Balance < transaction.Amount)
+                            {
+                                throw new Exception("Insuffiecient Balance");
+                            }
+                            acc.Balance = acc.Balance + transaction.Amount;
+                            Toacc.Balance = Toacc.Balance - transaction.Amount;
+                        }
                     }
+                    
                     
                 }
                 _transactionContext.Accounts.Update(acc);
