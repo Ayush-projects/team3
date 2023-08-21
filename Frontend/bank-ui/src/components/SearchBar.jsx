@@ -25,21 +25,29 @@ function SearchBar() {
          return NotificationManager.error("Please enter account number","Error",4000);
        }
        let token = localStorage.getItem("token");
- 
-        axios.get("https://localhost:5000/api/Account/GetAccountByAccNo?accNo="+ accountNumber ,{}, {
+       console.log(token);
+      //  let token = localStorage.getItem("token")
+        
+      //   axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Withdraw",accNum2:accnum,amount:amount},{
+      //       headers: {
+      //           'Authorization': 'Bearer ' + token
+      //       }
+      //   })
+        axios.get("https://localhost:5000/api/Account/GetAccountByAccNo?accNo="+ `${accountNumber}`, {
           headers: {
-            'Authorization': 'Bearer' + token 
-          }
+            'Authorization': 'Bearer ' + token
+        }
         })
         .then((response) => {
             console.log(response);
           
             if(response.status==200)
             {
-              let account = response.data;
-              console.log(account);
+              let account1 = response.data;
+              console.log(account1);
 
-              setAccount({account})
+              setAccount(account1);
+              console.log(account);
               setShow(true);
               setAccountNumber("");
             //   <CustomerData name= {account.name} accountNumber={account.accountNumber} type= {account.type} cardNumber={account.cardNumber}  balance= {account.balance} />
@@ -51,7 +59,7 @@ function SearchBar() {
     }
         return (
             <>
-            
+            <DashboardHeader></DashboardHeader>
             <div class="container">
 
             <div class="row height d-flex justify-content-center align-items-center">
@@ -73,7 +81,7 @@ function SearchBar() {
               </div>
               
             </div>
-            {show==true? (<CustomerData name= {account.name} accountNumber={account.accountNumber} type= {account.type} cardNumber={account.cardNumber}  balance= {account.balance} />): <div></div>};
+            {show? (<CustomerData name= {account.name} accountNumber={account.accNum} type= {account.accType} cardNumber={account.cardNo}  balance= {account.balance} />): <div></div>}
             
           </div>
         
