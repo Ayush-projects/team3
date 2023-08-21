@@ -14,19 +14,19 @@ function SearchBar() {
     let [show, setShow] = useState(false);
     let [account, setAccount] = useState([]);
     function handleClick() {
-      setAccountNumber = null;
+      setAccountNumber(null);
     }
     
     function submit()
     {
-     
-       if(accountNumber == null)
+      console.log(accountNumber);
+       if(accountNumber == "")
        {
          return NotificationManager.error("Please enter account number","Error",4000);
        }
        let token = localStorage.getItem("token");
  
-        axios.get("https://localhost:5000/api/Account/GetAccountByAccNo", {accountNumber},{
+        axios.get("https://localhost:5000/api/Account/GetAccountByAccNo?AccNo="+`${accountNumber}`, {
           headers: {
             'Authorization': 'Bearer' + token 
           }
@@ -41,6 +41,7 @@ function SearchBar() {
 
               setAccount({account})
               setShow(true);
+              setAccountNumber("");
             //   <CustomerData name= {account.name} accountNumber={account.accountNumber} type= {account.type} cardNumber={account.cardNumber}  balance= {account.balance} />
              } 
             else {
@@ -63,7 +64,7 @@ function SearchBar() {
                 <FontAwesomeIcon icon={faSearch} class = "fa fa-search"/>
 
                   <input type="text" class="form-control form-input" value={accountNumber} onChange={function(e){setAccountNumber(e.target.value)}} placeholder="Enter Account Number..."/>
-                  <span class="left-pan" onClick={handleClick}><FontAwesomeIcon icon={faXmark} class = "fa fa-arrow"/></span>
+                  <span class="left-pan" onClick={()=>{setAccountNumber("")}}><FontAwesomeIcon icon={faXmark} class = "fa fa-arrow"/></span>
                  
                   
                   {/* <span class="left-pan"><button type="submit" class = "btn btn-primary">{`&#xf105`}</button></span> */}
