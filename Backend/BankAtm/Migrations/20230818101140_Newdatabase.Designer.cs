@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAtm.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230818055323_NewDatabase")]
-    partial class NewDatabase
+    [Migration("20230818101140_Newdatabase")]
+    partial class Newdatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

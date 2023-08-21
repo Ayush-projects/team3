@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BankAtm.Migrations
 {
-    public partial class NewDatabase : Migration
+    public partial class Newdatabase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

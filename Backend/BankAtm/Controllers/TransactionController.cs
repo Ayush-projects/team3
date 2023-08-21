@@ -86,6 +86,11 @@ namespace BankAtm.Controllers
             try
             {
                 Transaction transaction = _transactionService.GetTransactionByTransId(TransId);
+                
+                if(transaction == null)
+                {
+                    return StatusCode(201, new JsonResult("Invalid Transaction ID"));
+                }
                 return StatusCode(200, transaction);
             }
             catch (Exception ex) { throw; }

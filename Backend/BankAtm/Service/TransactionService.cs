@@ -15,30 +15,56 @@ namespace BankAtm.Service
             Account Toacc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.ToAccNum); 
             if(Toacc == null)
             {
-                throw new Exception();
+                throw new Exception("Account2 doesnt't exists");
             }
             Account acc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.AccNum);
             if (acc != null)
             {
+                
                 if(transaction.TransType.Equals("Withdraw") || transaction.TransType.Equals("withdraw"))
                 {
-                    if(acc.Balance < transaction.Amount)
+                    if (transaction.AccNum==transaction.ToAccNum)
                     {
-                        throw new Exception("Insufficient Balance");
+                        if (acc.Balance < transaction.Amount)
+                        {
+                            throw new Exception("Insufficient Balance");
+                        }
+                        acc.Balance = acc.Balance - transaction.Amount;
                     }
-                    acc.Balance = acc.Balance - transaction.Amount;
-                    Toacc.Balance = Toacc.Balance + transaction.Amount;
+                    else
+                    {
+                        if (acc.Balance < transaction.Amount)
+                        {
+                            throw new Exception("Insufficient Balance");
+                        }
+                        acc.Balance = acc.Balance - transaction.Amount;
+                        Toacc.Balance = Toacc.Balance + transaction.Amount;
+                    }
+                        
                 }
                 else
                 {
-                    if (Toacc.Balance < transaction.Amount)
+                    if (transaction.AccNum == transaction.ToAccNum)
                     {
-                        throw new Exception("Insuffiecient Balance");
+                        if (acc.Balance < transaction.Amount)
+                        {
+                            throw new Exception("Insufficient Balance");
+                        }
+                        acc.Balance = acc.Balance + transaction.Amount;
                     }
-                    acc.Balance = acc.Balance + transaction.Amount;
-                    Toacc.Balance = Toacc.Balance - transaction.Amount;
+                    else
+                    {
+                        if (Toacc.Balance < transaction.Amount)
+                        {
+                            throw new Exception("Insuffiecient Balance");
+                        }
+                        acc.Balance = acc.Balance + transaction.Amount;
+                        Toacc.Balance = Toacc.Balance - transaction.Amount;
+                    }
+                    
                 }
                 _transactionContext.Accounts.Update(acc);
+                _transactionContext.Accounts.Update(Toacc);
             }
             // _transactionContext.Accounts.
             try
