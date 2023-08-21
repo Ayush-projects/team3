@@ -46,10 +46,7 @@ namespace BankAtm.Service
                 {
                     if (transaction.AccNum == transaction.ToAccNum)
                     {
-                        if (acc.Balance < transaction.Amount)
-                        {
-                            throw new Exception("Insufficient Balance");
-                        }
+                       
                         acc.Balance = acc.Balance + transaction.Amount;
                     }
                     else

@@ -13,5 +13,6 @@ namespace BankAtm.Service
 
         int GetBalanceByAccNum(long accNo);
         void UpdatePin(Account account);
+        Account GetAccountByCardNum(string CardNum);
     }
 }
