@@ -101,9 +101,9 @@ namespace BankAtm.Service
                 .OrderByDescending(t=>t.TransDateTime).ToList();
         }
 
-        public List<Transaction> GetTransactionByAccNo(int accnum)
+        public List<Transaction> GetTransactionByAccNo(long accnum)
         {
-            return (from transaction in _transactionContext.Transactions where transaction.AccNum==accnum select transaction).ToList();
+            return (from transaction in _transactionContext.Transactions where transaction.AccNum==accnum ||  transaction.ToAccNum == accnum select transaction).ToList();
         }
 
         public Transaction GetTransactionByTransId(Guid TransId)

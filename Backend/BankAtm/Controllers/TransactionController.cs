@@ -80,7 +80,7 @@ namespace BankAtm.Controllers
 
         }
         [HttpGet, Route("GetTransactionsByAccNum")]
-        public IActionResult GettTransactionsByAccNum(int AccNum)
+        public IActionResult GetTransactionsByAccNum(long AccNum)
         {
             try
             {
