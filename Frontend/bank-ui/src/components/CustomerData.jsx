@@ -77,4 +77,4 @@ export default function CustomerData({name, accountNumber, balance, type, cardNu
 			return <><Login></Login></>
 		}
     
-// }
+ }

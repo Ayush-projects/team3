@@ -15,6 +15,7 @@ export default function AddAccout()
         cardNo: '',
         cardName : '',
         balance : '',
+        atmPin: ''
             
     });
 
@@ -45,10 +46,10 @@ export default function AddAccout()
 
         if(formData.balance<1000)
         return NotificationManager.error("Inital balance must be atleast 1000","Error","4000");
-       let { id,accType , cardNo, cardName, balance} = formData
+       let { id,accType , cardNo, cardName, balance, atmPin} = formData
        console.log(formData)
     let token = localStorage.getItem("token")
-        axios.post("https://localhost:5000/api/Account/AddAccount",{ id,accType , cardNo, cardName, balance}, {
+        axios.post("https://localhost:5000/api/Account/AddAccount",{ id,accType , cardNo, cardName, balance, atmPin}, {
             headers: {
                 'Authorization': 'Bearer ' + token
             }
@@ -141,6 +142,16 @@ export default function AddAccout()
             onChange={handleInputChange}
             name = "cardName"
             value = {formData.cardName}
+            />
+            
+        </div>
+
+        <div class="mb-3 col">
+            <label for="atmPin" class="form-label">Pin</label>
+            <input type="password" class="form-control " id="pinnum"
+            onChange={handleInputChange}
+            name = "atmPin"
+            value = {formData.atmPin}
             />
             
         </div>
