@@ -54,7 +54,7 @@ export default function FundTransfer()
     
         axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:faccnum,transType:"Transfer",accNum2:taccnum,amount:amount},{
           headers : {
-            'Authorisation' : 'Bearer' + token
+            'Authorization' : 'Bearer ' + token
           }
         })
         .then((response) => {
@@ -161,3 +161,4 @@ if(isLoggedIn){
         }
 
 }
+

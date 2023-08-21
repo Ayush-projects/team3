@@ -13,9 +13,11 @@ export default function PinChange()
     let isLoggedIn = localStorage.getItem("isLoggedIn");
 
     const [formData,setFormData] = useState({
+        accNum: '',
        oldPin: '',
        newPin: '',
-       confirmNewPin: ''
+       confirmNewPin: '',
+       cardNo: ''
     });
 
     const navigate = useNavigate();
@@ -41,48 +43,48 @@ export default function PinChange()
             return NotificationManager.error("Please fill the complete form ","Error",4000);
         }
 
-      if(formData.newPin != formData.confirmNewPinconfirmNewPin)
+      if(formData.newPin != formData.confirmNewPin)
       {
         return NotificationManager.error("New Password and Confirm New Password Not Matching ","Error",4000);
       }
  
 
-     
+       let {accNum, cardNo, oldPin, newPin, confirmNewPin} = formData
         
         let token = localStorage.getItem("token");
     
-        // axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:faccnum,transType:"Transfer",accNum2:taccnum,amount:amount},{
-        //   headers : {
-        //     'Authorisation' : 'Bearer' + token
-        //   }
-        // })
-        // .then((response) => {
-        //   console.log(response)
+        axios.put("https://localhost:5000/api/Account/UpdateAtmPin",{ accNum, cardNo, atmPin: oldPin, newPin: confirmNewPin},{
+          headers : {
+            'Authorization' : 'Bearer ' + token
+          }
+        })
+        .then((response) => {
+          console.log(response)
 
-        //   if(response.status==200)
-        //   {
-        //     NotificationManager.success("Amount successfully transferred", "Success", 10000);
+          if(response.status==200)
+          {
+            NotificationManager.success("Pin Changed Successfully", "Success", 10000);
                      
-        //      setTimeout(()=>{
-        //        window.location.reload()
-        //      }, 6000)
-        //   }
-        //   else
+             setTimeout(()=>{
+               window.location.reload()
+             }, 6000)
+          }
+          else
   
-        //   {
+          {
           
-        //     NotificationManager.error(response.data.value, "Error", 30000);
-        //   }
+            NotificationManager.error(response.data.value, "Error", 30000);
+          }
   
-        // } ).catch((err)=>{
-        //     console.log(err)
-        //  if(err.response.data.value)
-        //  {
-        //     NotificationManager.error(err.response.data.value, "Error", 30000);
-        //  }
-        //  else
-        //   NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 30000);
-        // });    
+        } ).catch((err)=>{
+            console.log(err)
+         if(err.response.data.value)
+         {
+            NotificationManager.error(err.response.data.value, "Error", 30000);
+         }
+         else
+          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 30000);
+        });    
         
     }
 
@@ -98,6 +100,25 @@ if(isLoggedIn){
                 <h3>Pin Change</h3>
     <form>
         <div>
+        <div class="col ">
+            <label for="Name1" class="form-label">Account Number</label>
+            <input type="accNum" class="form-control "  id="faccnum"
+            onChange={handleInputChange}
+            name = "accNum"
+            value = {formData.accNum}
+             />
+        </div>  
+
+        <div class="col ">
+            <label for="Name1" class="form-label">Card Number</label>
+            <input type="accNum" class="form-control "  id="faccnum"
+            onChange={handleInputChange}
+            name = "cardNo"
+            value = {formData.cardNo}
+             />
+        </div>  
+
+
         <div class="col ">
             <label for="Name1" class="form-label">Old Pin</label>
             <input type="password" class="form-control "  id="faccnum"

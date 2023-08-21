@@ -26,7 +26,7 @@ function SearchBar() {
        }
        let token = localStorage.getItem("token");
  
-        axios.get("https://localhost:5000/api/Account/GetAccountByAccNo", {accountNumber},{
+        axios.get("https://localhost:5000/api/Account/GetAccountByAccNo?accNo="+ accountNumber ,{}, {
           headers: {
             'Authorization': 'Bearer' + token 
           }

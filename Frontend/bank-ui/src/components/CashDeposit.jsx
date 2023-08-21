@@ -45,10 +45,10 @@ export default function CashDeposit()
         let {accnum,amount} = formData;
         
         let token = localStorage.getItem("token");
-    
+        console.log(accnum, amount)
         axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Deposit",accNum2:accnum,amount:amount},{
           headers : {
-            'Authorisation' : 'Bearer' + token
+            'Authorization' : 'Bearer ' + token
           }
         })
         .then((response) => {

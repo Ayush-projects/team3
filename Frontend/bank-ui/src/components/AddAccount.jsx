@@ -59,12 +59,12 @@ export default function AddAccout()
             
           if(response.status==200)
           {
-            NotificationManager.success("Account Successfully Added with Account Number:" + response.data.accNum, "Success", 10000);
+            NotificationManager.success("Account Successfully Added with Account Number:" + response.data.accNum, "Success", 300000);
           
-           
+             alert(response.data.accNum)
              setTimeout(()=>{
                window.location.reload()
-             }, 6000)
+             }, 30000)
           }
           else
   
