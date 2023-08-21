@@ -5,10 +5,12 @@ import svgImage from '../assets/addcus.svg';
 import axios from 'axios'
 import Login from './Login'
 import DashboardHeader from "./DashboardHeader";
+
 export default function AddCustomer()
 {
 
     let isLoggedIn = localStorage.getItem("isLoggedIn")
+    let token = localStorage.getItem("token")
     const [formData,setFormData] = useState({
         name : '',
         address : '',
@@ -55,7 +57,10 @@ export default function AddCustomer()
         
    }
 
-        axios.post("https://localhost:5000/api/Customer/AddCustomer",{name, email, address, contactNo})
+        axios.post("https://localhost:5000/api/Customer/AddCustomer",{name, email, address, contactNo},{ headers: {
+        
+          'Authorization': 'Bearer '+ token
+        }})
         .then((response) => {
           console.log(response)
             
@@ -80,7 +85,7 @@ export default function AddCustomer()
   
   
         } ).catch((err)=>{
-         
+         console.log(err)
           NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
         });
      

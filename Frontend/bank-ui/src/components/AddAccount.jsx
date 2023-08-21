@@ -47,8 +47,12 @@ export default function AddAccout()
         return NotificationManager.error("Inital balance must be atleast 1000","Error","4000");
        let { id,accType , cardNo, cardName, balance} = formData
        console.log(formData)
-    
-        axios.post("https://localhost:5000/api/Account/AddAccount",{ id,accType , cardNo, cardName, balance})
+    let token = localStorage.getItem("token")
+        axios.post("https://localhost:5000/api/Account/AddAccount",{ id,accType , cardNo, cardName, balance}, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
         .then((response) => {
           console.log(response)
             

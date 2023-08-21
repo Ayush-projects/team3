@@ -5,6 +5,7 @@ import svgImage from '../assets/addcus.svg';
 import { useNavigate } from "react-router";
 import DashboardHeader from "./DashboardHeader";
 import Login from "./Login";
+import axios from "axios";
 
 export default function CashDeposit()
 {   
@@ -41,19 +42,37 @@ export default function CashDeposit()
         if(formData.accnum<16)
         return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
 
-        else if(formData.balance<1000)
-        return NotificationManager.error("Inital balance must be atleast 1000","Error","4000");
-
+        let {accnum,amount} = formData;
         
-        else if(formData.pinNumber.length<8)
-        return NotificationManager.error("Pin number must be of 8 digits","Error","4000");
+    
+        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Deposit",accNum2:accnum,amount:amount})
+        .then((response) => {
+          console.log(response)
 
-        else
-        {   
-            navigate('/');
-            return NotificationManager.success('Account added successfully',"Success","4000");
-            
-        }
+          if(response.status==200)
+          {
+            NotificationManager.success("Amount successfully withdrawn", "Success", 10000);
+                     
+             setTimeout(()=>{
+               window.location.reload()
+             }, 6000)
+          }
+          else
+  
+          {
+          
+            NotificationManager.error(response.data.value, "Error", 30000);
+          }
+  
+        } ).catch((err)=>{
+            console.log(err)
+         if(err.response.data.value)
+         {
+            NotificationManager.error(err.response.data.value, "Error", 30000);
+         }
+         else
+          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 30000);
+        });
 
 
         

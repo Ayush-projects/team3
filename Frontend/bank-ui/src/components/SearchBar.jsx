@@ -6,6 +6,7 @@ function SearchBar() {
     let [accountNumber, setAccountNumber] = useState();
     let [show, setShow] = useState(false);
     let [account, setAccount] = useState([]);
+    
     const onClick = () => setShow(true);
     function submit()
     {
