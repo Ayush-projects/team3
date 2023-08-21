@@ -13,5 +13,8 @@ namespace BankAtm.DTOS
         public string CardName { get; set; }
         [Required(ErrorMessage = "Please Enter Balance")]
         public int Balance { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Atm Pin"), MaxLength(4)]
+        public string AtmPin { get; set; }
     }
 }

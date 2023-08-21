@@ -47,16 +47,42 @@ export default function FundTransfer()
         else if(formData.taccnum<16)
         return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
 
-
-        else
-        {   
-            navigate('/');
-            return NotificationManager.success('Account added successfully',"Success","4000");
-            
-        }
-
-
+        let {faccnum,taccnum,amount} = formData;
         
+        let token = localStorage.getItem("token");
+    
+        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:faccnum,transType:"Transfer",accNum2:taccnum,amount:amount},{
+          headers : {
+            'Authorisation' : 'Bearer' + token
+          }
+        })
+        .then((response) => {
+          console.log(response)
+
+          if(response.status==200)
+          {
+            NotificationManager.success("Amount successfully transferred", "Success", 10000);
+                     
+             setTimeout(()=>{
+               window.location.reload()
+             }, 6000)
+          }
+          else
+  
+          {
+          
+            NotificationManager.error(response.data.value, "Error", 30000);
+          }
+  
+        } ).catch((err)=>{
+            console.log(err)
+         if(err.response.data.value)
+         {
+            NotificationManager.error(err.response.data.value, "Error", 30000);
+         }
+         else
+          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 30000);
+        });    
         
     }
 

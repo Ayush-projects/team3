@@ -7,6 +7,7 @@ namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController, Authorize(Roles = "admin")]
+    //[ApiController]
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
@@ -42,6 +43,10 @@ namespace BankAtm.Controllers
             try
             { 
             Customer customer = _customerService.GetCustomerById(id);
+                if(customer == null)
+                {
+                    return StatusCode(201, new JsonResult("No customer with this customer id"));
+                }
             return StatusCode(200, customer);
 
 

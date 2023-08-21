@@ -9,6 +9,7 @@ namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController, Authorize(Roles ="admin")]
+    //[ApiController]
     public class AccountController : ControllerBase
     {
 
@@ -21,6 +22,16 @@ namespace BankAtm.Controllers
         [HttpPost, Route("AddAccount")]
         public IActionResult Add(AccountDTO accountDTO)
         {
+            if(accountDTO.CardNo.Length!=16)
+            {
+                return StatusCode(201, new JsonResult("Invalid card number"));
+            }
+
+            if (accountDTO.AtmPin.Length != 4)
+            {
+                return StatusCode(201, new JsonResult("Invalid Atm Pin"));
+            }
+
             try
             {
                 Account account = new Account()
@@ -30,7 +41,7 @@ namespace BankAtm.Controllers
                    Balance = accountDTO.Balance,
                    CardName = accountDTO.CardName,
                    CardNo = accountDTO.CardNo,
-                   
+                   AtmPin= accountDTO.AtmPin,
                 };
                 account.AccNum = GenerateAccNum(account.AccType, accountDTO.Id);
                 _accountService.AddAccountDetails(account);
@@ -38,7 +49,7 @@ namespace BankAtm.Controllers
 
             }
             catch (Exception ex) { 
-                return StatusCode(201, new JsonResult(ex.ToString())); }
+                return StatusCode(201, new JsonResult("Invalid Customer ID")); }
         }
         [HttpGet, Route("GetAccountById")]
         public IActionResult GetAccountById(int id)
@@ -53,12 +64,27 @@ namespace BankAtm.Controllers
             catch (Exception ex) { throw; }
         }
 
+        [HttpGet, Route("GetBalanceByAccNo")]
+        public IActionResult GetBalanceByaccNo(long accNo)
+        {
+            int bal = _accountService.GetBalanceByAccNum(accNo);
+            if(bal==-1)
+            {
+                return StatusCode(201, new JsonResult("Account doesn't exists"));
+            }
+            return StatusCode(200, bal);
+        }
+
         [HttpGet, Route("GetAccountByAccNo")]
         public IActionResult GetAccountbyAccNo(long AccNo)
         {
             try
             {
                Account account = _accountService.GetAccountByAccNo(AccNo);
+                if(account==null)
+                {
+                    return StatusCode(201, new JsonResult("No account with this Account Number"));
+                }
                 return StatusCode(200, account);
 
 
@@ -90,6 +116,17 @@ namespace BankAtm.Controllers
 
             }
             catch (Exception ex) { throw; }
+        }
+
+        [HttpPut, Route("UpdateAtmPin")]
+        public IActionResult UpdatePin(ChangePinDTO changePinDTO)
+        {
+            Account account = _accountService.GetAccountByAccNo(changePinDTO.AccNum);
+            if(account==null)
+            {
+                return StatusCode(201, new JsonResult("Invalid Account Number"));
+            }
+            return StatusCode(201, new JsonResult("Invalid Account Number"));
         }
 
         private static Random RNG = new Random();

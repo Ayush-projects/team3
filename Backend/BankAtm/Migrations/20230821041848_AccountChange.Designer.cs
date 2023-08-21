@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAtm.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230818055323_NewDatabase")]
-    partial class NewDatabase
+    [Migration("20230821041848_AccountChange")]
+    partial class AccountChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,9 @@ namespace BankAtm.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("varchar(10)");
+
+                    b.Property<int>("AtmPin")
+                        .HasColumnType("int");
 
                     b.Property<int>("Balance")
                         .HasColumnType("int");
