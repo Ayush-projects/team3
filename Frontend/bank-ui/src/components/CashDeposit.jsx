@@ -44,14 +44,19 @@ export default function CashDeposit()
 
         let {accnum,amount} = formData;
         
+        let token = localStorage.getItem("token");
     
-        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Deposit",accNum2:accnum,amount:amount})
+        axios.post("https://localhost:5000/api/Transaction/AddTransaction",{ accNum1:accnum,transType:"Deposit",accNum2:accnum,amount:amount},{
+          headers : {
+            'Authorisation' : 'Bearer' + token
+          }
+        })
         .then((response) => {
           console.log(response)
 
           if(response.status==200)
           {
-            NotificationManager.success("Amount successfully withdrawn", "Success", 10000);
+            NotificationManager.success("Amount successfully deposited", "Success", 10000);
                      
              setTimeout(()=>{
                window.location.reload()
