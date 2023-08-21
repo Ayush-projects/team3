@@ -1,0 +1,88 @@
+body{
+
+    background: #d1d5db;
+}
+
+.height{
+   
+    height: 37vh;
+}
+.col-md-6{
+    display: flex;
+    background-color: black;
+    border-radius: 10px;
+    padding :10px;
+    position: relative;
+    width: 70vw;
+}
+
+.form{
+
+    position: relative;
+    width: 60vw;
+}
+
+.form .fa-search{
+
+    position: absolute; 
+    height: 15px;
+    
+    top:20px;
+    left: 20px;
+    color: black;
+
+}
+.form .fa-arrow{
+
+    position: absolute; 
+    height: 15px;
+    top: 5px;
+    right:15px;
+    color: black;
+    padding-left: 10px;
+    border-left: 5px black;
+
+}
+
+.form span{
+
+    position: absolute;
+    right: 50px;
+    top: 13px;
+    padding: 2px;
+    border-left: 1px solid #d1d5db;
+
+}
+
+.left-pan{
+    padding-left: 7px;
+    
+
+}
+
+
+.form-input{
+
+    height: 55px;
+    text-indent: 33px;
+    border-radius: 10px;
+}
+
+.form-input:focus{
+
+    box-shadow: none;
+    border:none;
+}
+
+.submit-btn{
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: black;
+    color: white;
+    border: none;
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    padding: 2px;
+}
