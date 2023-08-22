@@ -79,7 +79,7 @@ namespace BankAtm.Controllers
             catch (Exception ex) { return StatusCode(201,new JsonResult("Customer Id doesn't exists")); }
         }
         [HttpPut, Route("UpdateCustomerEmail")]
-        public IActionResult UpdateCust(CustomerEmail customeremail)
+        public IActionResult UpdateCustEmail(CustomerEmail customeremail)
         {
             
             Customer cst = _customerService.GetCustomerById(customeremail.Id);
@@ -88,6 +88,7 @@ namespace BankAtm.Controllers
                 try
                 {
                     cst.Email = customeremail.Email;
+                   
                     _customerService.UpdateCustomer(cst);
 
                     return StatusCode(200, cst);
@@ -105,5 +106,65 @@ namespace BankAtm.Controllers
             }
            
         }
+        [HttpPut, Route("UpdateCustomerAddress")]
+        public IActionResult UpdateCustAddress(CustomerAddress customeraddress)
+        {
+
+            Customer cst = _customerService.GetCustomerById(customeraddress.Id);
+            if (cst != null)
+            {
+                try
+                {
+                    cst.Address = customeraddress.Address;
+
+                    _customerService.UpdateCustomer(cst);
+
+                    return StatusCode(200, cst);
+
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(201, new JsonResult("Coudn't update address"));
+                }
+
+
+            }
+            else
+            {
+                return StatusCode(202, new JsonResult("Invalid ID"));
+            }
+
+        }
+
+        [HttpPut, Route("UpdateCustomerContactNo")]
+        public IActionResult UpdateCustContactNo(CustomerContNo customercontno)
+        {
+
+            Customer cst = _customerService.GetCustomerById(customercontno.Id);
+            if (cst != null)
+            {
+                try
+                {
+                    cst.ContactNo = customercontno.ContactNo;
+
+                    _customerService.UpdateCustomer(cst);
+
+                    return StatusCode(200, cst);
+
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(201, new JsonResult("Couldn't update contact number"));
+                }
+
+
+            }
+            else
+            {
+                return StatusCode(202, new JsonResult("Invalid ID"));
+            }
+
+}
+
     }
 }
