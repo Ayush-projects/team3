@@ -7,9 +7,7 @@ import Login from './Login'
 import DashboardHeader from './DashboardHeader';
 import CustomerTransactions from './CustomerTransactions';
 export default function CustomerData({name, accountNumber, balance, type, cardNumber}){
-    
 
-    
         var [isShown, setIsShown] = useState(false);
 
         var handleClick = event => {
@@ -20,6 +18,8 @@ export default function CustomerData({name, accountNumber, balance, type, cardNu
           style: "currency",
           currency: "INR",
         });
+
+		
         //const { accountNumber, customerId, accountBalance } = this.state.customerData;
     let isLoggedIn = localStorage.getItem("isLoggedIn")
 	if(isLoggedIn=="true"){
