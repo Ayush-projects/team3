@@ -9,4 +9,5 @@ public interface ICustomerService
     Customer GetCustomerById(int id);
     void UpdateCustomer(Customer customer);
     void DeleteCustomer(int id);
+    Customer GetcustomerByEmail(string email);
 }
