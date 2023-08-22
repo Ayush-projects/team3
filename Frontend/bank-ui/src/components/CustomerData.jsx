@@ -5,6 +5,7 @@ import {useState} from 'react';
 import axios from 'axios';
 import Login from './Login'
 import DashboardHeader from './DashboardHeader';
+import CustomerTransactions from './CustomerTransactions';
 export default function CustomerData({name, accountNumber, balance, type, cardNumber}){
     
 
@@ -58,7 +59,7 @@ export default function CustomerData({name, accountNumber, balance, type, cardNu
 		<div class="recent-border mt-4">
 			<span class="recent-orders" onClick = {handleClick}>Recent Transactions</span>
             
-            {isShown ? <CustomerDetailsRow/> : null}
+            {isShown ? <CustomerTransactions accountNumber={accountNumber}/> : null}
 		</div>
 		<div class="account-type-border pt-2">
 			<span class="account-type">Account Type: {type}</span>
