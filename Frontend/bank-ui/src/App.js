@@ -17,6 +17,7 @@ import CashDeposit from './components/CashDeposit';
 import CashWithdraw from './components/CashWithdraw';
 import FundTransfer from './components/FundTransfer';
 import PinChange from './components/PinChange';
+import CurrencyConverter from './components/CurrencyConverter';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
       <Route path = "/cwith" element = {<CashWithdraw/>}/>
       <Route path = "/fundtrans" element = {<FundTransfer/>}/>
       <Route path = "/pinChange" element = {<PinChange/>}/>
+      <Route path="/currConversion" element={<CurrencyConverter/>} />
 
     </Routes>
     </BrowserRouter>

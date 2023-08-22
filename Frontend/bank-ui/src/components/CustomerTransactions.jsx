@@ -10,14 +10,14 @@ import CancelIcon from '../assets/icons/cancel.svg';
 import RefundedIcon from '../assets/icons/refunded.svg';
 import { NotificationManager } from 'react-notifications';
 import axios from 'axios'
-function Orders () {
+function CustomerTransactions ({accountNumber}) {
   
     const [orders, setOrders] = useState('');
     const [all_trans, set_all_trans] =  useState('')
-   const [test, setTest] = useState('')
+
     useEffect(() => {
    let token = localStorage.getItem("token")
-      axios.get("https://localhost:5000/api/Transaction/GetLast10Transactions", {
+      axios.get("https://localhost:5000/api/Transaction/GetTransactionsByAccNum?AccNum="+ `${accountNumber}`,  {
         headers: {
         
             'Authorization': 'Bearer '+ token
@@ -26,7 +26,7 @@ function Orders () {
               
         if(response.status==200)
         {
-          NotificationManager.success("recent Transactions Fetched Successfully", "Success", 4000);
+          //NotificationManager.success("recent Transactions Fetched Successfully", "Success", 4000);
           set_all_trans(response.data)
         
         }
@@ -46,18 +46,17 @@ function Orders () {
          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
        });
       
-    }, [test]);
+    }, []);
 
 
     
 
     return(
         <div className='dashboard-content'>
-            <DashboardHeader/>
-
+            
             <div className='dashboard-content-container'>
                 <div className='dashboard-content-header'>
-                    <h2>Transactions List</h2>
+                    
                     {/* <div className='dashboard-content-search'>
                         <input
                             type='text'
@@ -104,7 +103,7 @@ function Orders () {
                                     </td>
                                     
                                     <td><span>{order.transDateTime}</span></td>
-                                    <td><span>₹{order.amount}</span></td>
+                                    <td><span>${order.amount}</span></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -116,4 +115,4 @@ function Orders () {
     )
 }
 
-export default Orders;
+export default CustomerTransactions;
