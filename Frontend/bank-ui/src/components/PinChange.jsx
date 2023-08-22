@@ -47,6 +47,13 @@ export default function PinChange()
       {
         return NotificationManager.error("New Password and Confirm New Password Not Matching ","Error",4000);
       }
+
+      
+      if(formData.cardNo.length != 16)
+      {
+        return NotificationManager.error("Card Number is Invalid","Error",4000);
+      }
+ 
  
 
        let {accNum, cardNo, oldPin, newPin, confirmNewPin} = formData

@@ -24,7 +24,7 @@ export default function CustomerData({name, accountNumber, balance, type, cardNu
 	if(isLoggedIn=="true"){
         return (
 			<>
-			<DashboardHeader></DashboardHeader>
+			
     <div class="container d-flex justify-content-center mt-5">
 
 	<div class="card">
