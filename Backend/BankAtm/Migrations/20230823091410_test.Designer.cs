@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAtm.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230822062415_migration3")]
-    partial class migration3
+    [Migration("20230823091410_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,6 +28,9 @@ namespace BankAtm.Migrations
                 {
                     b.Property<long>("AccNum")
                         .HasColumnType("bigint");
+
+                    b.Property<int>("AccStatus")
+                        .HasColumnType("int");
 
                     b.Property<string>("AccType")
                         .IsRequired()
