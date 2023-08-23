@@ -74,11 +74,6 @@ namespace BankAtm.Service
             _customerContext.SaveChanges();
         }
 
-        public void UpdatePin(Account account)
-        {
-
-            _customerContext.Accounts.Update(account);
-            _customerContext.SaveChanges();
-        }
+      
     }
 }
