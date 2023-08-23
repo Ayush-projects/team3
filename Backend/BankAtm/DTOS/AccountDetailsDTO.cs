@@ -10,7 +10,7 @@ namespace BankAtm.DTOS
         public string CardNo { get; set; }
         public string CardName { get; set; }
         public int Balance { get; set; }
-
+        public int AccStatus { get; set; }
         public string AtmPin { get; set; }
     }
 }

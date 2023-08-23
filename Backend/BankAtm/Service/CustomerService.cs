@@ -43,6 +43,11 @@ namespace BankAtm.Service
             return _dbcustomer.Customers.ToList();
         }
 
+        public Customer GetcustomerByEmail(string email)
+        {
+            return (_dbcustomer.Customers.FirstOrDefault(p => p.Email == email));
+        }
+
         public Customer GetCustomerById(int id)
         {
             Customer customer = _dbcustomer.Customers.Find(id);

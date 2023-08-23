@@ -61,17 +61,21 @@ namespace BankAtm.Service
            return _customerContext.Accounts.ToList();
         }
 
+        public int GetBalanceByAccNum(long accNo)
+        {
+            Account account = _customerContext.Accounts.Find(accNo);
+            if (account != null)
+            {
+                return account.Balance;
+            }
+            return -1;
+        }
         public void UpdateAccountDetails(Account account)
         {
             _customerContext.Accounts.Update(account);
             _customerContext.SaveChanges();
         }
 
-        public void UpdatePin(Account account)
-        {
 
-            _customerContext.Accounts.Update(account);
-            _customerContext.SaveChanges();
-        }
     }
 }

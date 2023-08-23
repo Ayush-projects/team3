@@ -30,6 +30,7 @@ function DashboardHeader () {
                     <li><a class ="dropdown-item" href = '/cdep'>Deposit</a></li>
                     <li><a class ="dropdown-item" href = '/fundtrans'>Transfer</a></li>
                     <li><a class ="dropdown-item" href = '/pinChange'>Pin Change</a></li>
+                    <li><a class ="dropdown-item" href = '/upDe'>Update Details</a></li>
                 </ul>
                 
                 

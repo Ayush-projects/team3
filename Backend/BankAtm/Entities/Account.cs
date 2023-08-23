@@ -37,6 +37,8 @@ namespace BankAtm.Entities
         [Required]
         [StringLength(4)]
         public string AtmPin { get; set; }
+        
+        public int AccStatus { get; set; }
 
         public virtual ICollection<Transaction> Transactions { get; set; }
 

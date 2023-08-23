@@ -59,7 +59,7 @@ function SearchBar() {
     }
         return (
             <>
-            <DashboardHeader></DashboardHeader>
+            
             <div class="container">
 
             <div class="row height d-flex justify-content-center align-items-center">

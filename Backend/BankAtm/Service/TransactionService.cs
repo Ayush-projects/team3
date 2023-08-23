@@ -15,7 +15,7 @@ namespace BankAtm.Service
             Account acc = _transactionContext.Accounts.Find(transaction.AccNum);
             if(acc == null)
             {
-                throw new Exception("Customer Account doesn't exist");
+                throw new Exception("Account2 doesnt't exists");
             }
             if (acc.Balance < transaction.Amount)
             {
@@ -33,7 +33,7 @@ namespace BankAtm.Service
                 {
                     throw new Exception("Account2 doesnt't exists");
                 }
-                if (transaction.TransType.Equals("Transfer"), StringComparison.CurrentCultureIgnoreCase))
+                if (transaction.TransType.Equals("Transfer", StringComparison.CurrentCultureIgnoreCase))
                 {
                     acc.Balance = acc.Balance - transaction.Amount;
                     Toacc.Balance = Toacc.Balance + transaction.Amount;

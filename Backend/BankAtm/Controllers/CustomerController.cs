@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BankAtm.DTOS;
 using BankAtm.Entities;
-using Castle.Core.Resource;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

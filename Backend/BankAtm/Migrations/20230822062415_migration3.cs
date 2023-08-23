@@ -4,7 +4,7 @@
 
 namespace BankAtm.Migrations
 {
-    public partial class migration2 : Migration
+    public partial class migration3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

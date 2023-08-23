@@ -109,9 +109,32 @@ namespace BankAtm.Controllers
                 return StatusCode(201, new JsonResult("wrong pin"));
             }
             account.AtmPin = changePinDTO.NewPin;
-            _accountService.UpdatePin(account);
+            _accountService.UpdateAccountDetails(account);
             AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
             return StatusCode(200, accountDetails);
+        }
+
+        [HttpPut,Route("EnableDisableStatus")]
+        public IActionResult AccountStatusUpdate(UserStatus userStatus)
+        {
+            Account account = _accountService.GetAccountByAccNo(userStatus.AccNum);
+            if(account==null)
+            {
+                return StatusCode(201, new JsonResult("Invalid Account Number"));
+            }
+            else
+            {
+                if(userStatus.AccStatus.Equals("Disable"))
+                {
+                    account.AccStatus = 0;
+                }
+                else
+                {
+                    account.AccStatus= 1;
+                }
+                _accountService.UpdateAccountDetails(account);
+                return StatusCode(200, new JsonResult("Status updated successfully"));
+            }
         }
 
         private static Random RNG = new Random();
