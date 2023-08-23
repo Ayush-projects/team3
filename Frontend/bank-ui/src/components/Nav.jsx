@@ -28,7 +28,6 @@ function Nav() {
             </div>
             <div className="offcanvas-body">
               <ul className="navbar-nav flex-grow-1 justify-content-between">
-                <li className="nav-item"><a className="nav-link" href="#">Link 1</a></li>
                 <li className="nav-item"><a className="nav-link" href="/">Home</a></li>
                 <li className="nav-item"><a className="nav-link" href="/dashboard">Dashboard</a></li>
                 <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
