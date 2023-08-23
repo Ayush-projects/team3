@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using BankAtm.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using AutoMapper;
 
 namespace BankAtm.Controllers
 {
@@ -13,10 +14,12 @@ namespace BankAtm.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
+        private readonly IMapper _mapper;
         
-        public TransactionController(ITransactionService transactionService)
+        public TransactionController(ITransactionService transactionService, IMapper mapper)
         {
             _transactionService = transactionService;
+            _mapper = mapper;
         }
 
         [HttpGet, Route("GetLast10Transactions")]
@@ -25,7 +28,8 @@ namespace BankAtm.Controllers
             try
             {
                 List<Transaction> transactions = _transactionService.GetLast10Transactions();
-                return StatusCode(200, transactions);
+                List<TransactionDetailsDTO> details = _mapper.Map<List<TransactionDetailsDTO>>(transactions);
+                return StatusCode(200, details);
             }
             catch (Exception ex) { throw; }
         }
@@ -33,20 +37,19 @@ namespace BankAtm.Controllers
         [HttpPost,Route("AddTransaction")]
         public IActionResult AddNewTransaction(TransactionDTO transactionDTO)
         {
-            
             try
             {
                 Transaction transaction = new Transaction()
                 {
                     AccNum = transactionDTO.AccNum1,
-
                     TransType = transactionDTO.TransType,
                     TransDateTime = DateTime.Now,
                     ToAccNum=transactionDTO.AccNum2,
                     Amount= transactionDTO.Amount,
                 };
                 _transactionService.AddTransaction(transaction);
-                return StatusCode(200, transactionDTO);
+                TransactionDetailsDTO transactionDetails = _mapper.Map<TransactionDetailsDTO>(transaction);
+                return StatusCode(200, transactionDetails);
             }catch (DbUpdateException ex) { return StatusCode(201, new JsonResult("No such Account number exists ")); }
             catch(Exception ex) {return StatusCode(201, new JsonResult(ex.Message)); }
         }
@@ -57,8 +60,10 @@ namespace BankAtm.Controllers
             try
             {
                 List<Transaction> transactions = _transactionService.GetAllTransactions();
-                return StatusCode(200, transactions);
-            }catch(Exception ex) { throw; }
+                List<TransactionDetailsDTO> details = _mapper.Map<List<TransactionDetailsDTO>>(transactions);
+                return StatusCode(200, details);
+            }
+            catch(Exception ex) { throw; }
             
         }
         [HttpGet, Route("GetTransactionsByType")]
@@ -71,7 +76,8 @@ namespace BankAtm.Controllers
                 if (transtype.Equals("deposite") == true || transtype.Equals("withdraw") == true)
                 {
                     List<Transaction> transactions = _transactionService.GetTransactionByType(transtype);
-                    return StatusCode(200, transactions);
+                    List<TransactionDetailsDTO> details = _mapper.Map<List<TransactionDetailsDTO>>(transactions);
+                    return StatusCode(200, details);
                 }
                 return StatusCode(201, new JsonResult("Enter 'deposite' or 'withdraw'"));
 
@@ -85,7 +91,8 @@ namespace BankAtm.Controllers
             try
             {
                 List<Transaction> transactions = _transactionService.GetTransactionByAccNo(AccNum);
-                return StatusCode(200, transactions);
+                List<TransactionDetailsDTO> details = _mapper.Map<List<TransactionDetailsDTO>>(transactions);
+                return StatusCode(200, details);
             }
             catch (Exception ex) { throw; }
 
@@ -98,11 +105,9 @@ namespace BankAtm.Controllers
             {
                 Transaction transaction = _transactionService.GetTransactionByTransId(TransId);
                 
-                if(transaction == null)
-                {
-                    return StatusCode(201, new JsonResult("Invalid Transaction ID"));
-                }
-                return StatusCode(200, transaction);
+                if(transaction == null) return StatusCode(201, new JsonResult("Invalid Transaction ID"));
+                TransactionDetailsDTO transactionDetails = _mapper.Map<TransactionDetailsDTO>(transaction);
+                return StatusCode(200, transactionDetails);
             }
             catch (Exception ex) { throw; }
 

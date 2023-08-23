@@ -13,6 +13,5 @@ namespace BankAtm.Service
 
         int GetBalanceByAccNum(long accNo);
         Account GetAccountByCardNum(string CardNum);
-        
     }
 }

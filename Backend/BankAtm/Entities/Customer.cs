@@ -28,5 +28,7 @@ namespace BankAtm.Entities
         [StringLength(25)]
         [Column(TypeName = "varchar")]
         public string Email { get; set; }
+
+        public virtual ICollection<Account> Accounts { get; set; }
     }
 }

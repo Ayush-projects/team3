@@ -18,7 +18,7 @@ namespace BankAtm.Entities
 
         [ForeignKey("Account")]
         public long AccNum{ get; set; }
-        public Account? Account { get; set; }//navigation prop
+        public virtual Account? Account { get; set; }//navigation prop
 
         [Required]
         public long ToAccNum { get; set; }

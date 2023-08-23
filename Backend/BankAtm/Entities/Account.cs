@@ -16,13 +16,14 @@ namespace BankAtm.Entities
         [ForeignKey("Customer")]
         
         public int Id { get; set; }
-        public Customer? Customer { get; set; }//navigation prop
+        public virtual Customer? Customer { get; set; }//navigation prop
         [Required]
         [StringLength(10)]
         [Column(TypeName = "varchar")]
         public string AccType{ get; set; }
 
         [Required]
+        [StringLength(16)]
         public string CardNo { get; set; }
 
         [Required]
@@ -38,6 +39,8 @@ namespace BankAtm.Entities
         public string AtmPin { get; set; }
         
         public int AccStatus { get; set; }
+
+        public virtual ICollection<Transaction> Transactions { get; set; }
 
     }
 }

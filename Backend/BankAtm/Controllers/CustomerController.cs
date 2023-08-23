@@ -1,4 +1,5 @@
-﻿using BankAtm.DTOS;
+﻿using AutoMapper;
+using BankAtm.DTOS;
 using BankAtm.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,11 @@ namespace BankAtm.Controllers
     public class CustomerController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        public CustomerController(ICustomerService customerService)
+        private readonly IMapper _mapper;
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
+            _mapper = mapper;
         }
         [HttpPost,Route("AddCustomer")]
         public IActionResult Add(CustomerDTO customerDTO)
@@ -30,7 +33,8 @@ namespace BankAtm.Controllers
                     Email= customerDTO.Email,
                 };
                 _customerService.AddCustomer(customer);
-                return StatusCode(200, customer);
+                CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
+                return StatusCode(200, customerDetails);
                 
             }catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
@@ -42,15 +46,12 @@ namespace BankAtm.Controllers
         {
             try
             { 
-            Customer customer = _customerService.GetCustomerById(id);
-                if(customer == null)
-                {
-                    return StatusCode(201, new JsonResult("No customer with this customer id"));
-                }
-            return StatusCode(200, customer);
-
-
-            }catch(Exception ex) { throw ex; }
+                Customer customer = _customerService.GetCustomerById(id);
+                if(customer == null) return StatusCode(201, new JsonResult("No customer with this customer id"));
+                CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
+                return StatusCode(200, customerDetails);
+            }
+            catch(Exception ex) { throw ex; }
         }
 
         [HttpGet, Route("GetAllCustomers")]
@@ -59,9 +60,8 @@ namespace BankAtm.Controllers
             try
             {
                 List<Customer> customers = _customerService.GetAllCustomers();
-                return StatusCode(200, customers);
-
-
+                List<CustomerDetailsDTO> details = _mapper.Map<List<CustomerDetailsDTO>>(customers);
+                return StatusCode(200, details);
             }
             catch (Exception ex) { return StatusCode(501,ex.Message); }
         }
@@ -73,8 +73,6 @@ namespace BankAtm.Controllers
             {
                 _customerService.DeleteCustomer(id);
                 return StatusCode(200, new JsonResult("Deleted"));
-
-
             }
             catch (Exception ex) { return StatusCode(201,new JsonResult("Customer Id doesn't exists")); }
         }
@@ -82,52 +80,78 @@ namespace BankAtm.Controllers
         public IActionResult UpdateCustEmail(CustomerEmail customeremail)
         {
             
-            Customer cst = _customerService.GetCustomerById(customeremail.Id);
-            if( cst != null )
+            Customer customer = _customerService.GetCustomerById(customeremail.Id);
+            if(customer != null )
             {
                 try
                 {
-                    cst.Email = customeremail.Email;
+                    customer.Email = customeremail.Email;
                    
-                    _customerService.UpdateCustomer(cst);
+                    _customerService.UpdateCustomer(customer);
 
-                    return StatusCode(200, cst);
+                    CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
+                    return StatusCode(200, customerDetails);
 
-                }catch(Exception ex)
+                }
+                catch(Exception ex)
                 {
                     return StatusCode(201, new JsonResult("Email Id already exists"));
                 }
-
-
             }
             else
             {
                 return StatusCode(202,new JsonResult("Invalid ID"));
             }
-           
         }
+
         [HttpPut, Route("UpdateCustomerAddress")]
         public IActionResult UpdateCustAddress(CustomerAddress customeraddress)
         {
 
-            Customer cst = _customerService.GetCustomerById(customeraddress.Id);
-            if (cst != null)
+            Customer customer = _customerService.GetCustomerById(customeraddress.Id);
+            if (customer != null)
             {
                 try
                 {
-                    cst.Address = customeraddress.Address;
+                    customer.Address = customeraddress.Address;
 
-                    _customerService.UpdateCustomer(cst);
-
-                    return StatusCode(200, cst);
+                    _customerService.UpdateCustomer(customer);
+                    CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
+                    return StatusCode(200, customerDetails);
 
                 }
                 catch (Exception ex)
                 {
                     return StatusCode(201, new JsonResult("Coudn't update address"));
                 }
+            }
+            else
+            {
+                return StatusCode(202, new JsonResult("Invalid ID"));
+            }
+        }
 
+        [HttpPut, Route("UpdateCustomerContactNo")]
+        public IActionResult UpdateCustContactNo(CustomerContNo customercontno)
+        {
 
+            Customer customer = _customerService.GetCustomerById(customercontno.Id);
+            if (customer != null)
+            {
+                try
+                {
+                    customer.ContactNo = customercontno.ContactNo;
+
+                    _customerService.UpdateCustomer(customer);
+
+                    CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
+                    return StatusCode(200, customerDetails);
+
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(201, new JsonResult("Couldn't update contact number"));
+                }
             }
             else
             {
@@ -135,36 +159,6 @@ namespace BankAtm.Controllers
             }
 
         }
-
-        [HttpPut, Route("UpdateCustomerContactNo")]
-        public IActionResult UpdateCustContactNo(CustomerContNo customercontno)
-        {
-
-            Customer cst = _customerService.GetCustomerById(customercontno.Id);
-            if (cst != null)
-            {
-                try
-                {
-                    cst.ContactNo = customercontno.ContactNo;
-
-                    _customerService.UpdateCustomer(cst);
-
-                    return StatusCode(200, cst);
-
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(201, new JsonResult("Couldn't update contact number"));
-                }
-
-
-            }
-            else
-            {
-                return StatusCode(202, new JsonResult("Invalid ID"));
-            }
-
-}
 
     }
 }
