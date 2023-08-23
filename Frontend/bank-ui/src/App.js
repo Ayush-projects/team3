@@ -19,6 +19,7 @@ import FundTransfer from './components/FundTransfer';
 import PinChange from './components/PinChange';
 import CurrencyConverter from './components/CurrencyConverter';
 import UpdateDetails from './components/UpdateDetails';
+import Enable from './components/Enable'
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
       <Route path = "/pinChange" element = {<PinChange/>}/>
       <Route path="/currConversion" element={<CurrencyConverter/>} />
       <Route path="/upDe" element={<UpdateDetails/>} />
+      <Route path="/ends" element={<Enable></Enable>} />
 
     </Routes>
     </BrowserRouter>
