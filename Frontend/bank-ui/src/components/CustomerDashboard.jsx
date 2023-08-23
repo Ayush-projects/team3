@@ -34,7 +34,7 @@ class CustomerBankingDataPage extends Component {
 
     return (
       <PageContainer>
-        <DashboardHeader></DashboardHeader>
+        <DashboardHeader/>
         {/* <CustomerData/> */}
         <SearchBar/>
       </PageContainer>

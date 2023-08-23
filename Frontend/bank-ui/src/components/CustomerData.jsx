@@ -51,7 +51,18 @@ export default function CustomerData({name, accountNumber, balance, type, cardNu
 				</div>
 				<div class="d-flex flex-column text-right mr-2">
 					<span class="current-balance">Current Balance</span>
-					<span class="amount"><span class="dollar-sign"></span>{formatter.format(balance)}</span>
+					<span class="amount"><span class="dollar-sign"></span>
+					<span class="dropdown"> 
+  <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+  {balance}
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Action</a></li>
+    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="#">Something else here</a></li>
+  </ul>
+</span>
+					</span>
 				</div>
 
 		</div>
