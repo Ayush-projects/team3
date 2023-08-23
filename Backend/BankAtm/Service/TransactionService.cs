@@ -17,6 +17,10 @@ namespace BankAtm.Service
             {
                 throw new Exception("Account2 doesnt't exists");
             }
+            if (acc.AccStatus == 0)
+            {
+                throw new Exception("Account is disabled");
+            }
             if (acc.Balance < transaction.Amount)
             {
                 throw new Exception("Insufficient Balance");
@@ -32,6 +36,10 @@ namespace BankAtm.Service
                 if (Toacc == null)
                 {
                     throw new Exception("Account2 doesnt't exists");
+                }
+                if (Toacc.AccStatus == 0)
+                {
+                    throw new Exception("Account is disabled");
                 }
                 if (transaction.TransType.Equals("Transfer", StringComparison.CurrentCultureIgnoreCase))
                 {
