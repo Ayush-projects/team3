@@ -12,12 +12,25 @@ namespace BankAtm.Service
         }
         public void AddTransaction(Transaction transaction)
         {
+            Account acc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.AccNum);
+            if(acc==null)
+            {
+                throw new Exception("Account doesnt't exists");
+            }
+            if(acc.AccStatus==0)
+            {
+                throw new Exception("Account is disabled");
+            }
             Account Toacc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.ToAccNum); 
             if(Toacc == null)
             {
-                throw new Exception("Account2 doesnt't exists");
+                throw new Exception("Account2 doesn't exists");
             }
-            Account acc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.AccNum);
+            if(Toacc.AccStatus==0)
+            {
+                throw new Exception("Account2 is disabled");
+            }
+           
             if (acc != null)
             {
                 

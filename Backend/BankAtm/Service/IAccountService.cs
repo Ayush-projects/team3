@@ -12,7 +12,7 @@ namespace BankAtm.Service
         void DeleteAccount(long accNo);
 
         int GetBalanceByAccNum(long accNo);
-        void UpdatePin(Account account);
         Account GetAccountByCardNum(string CardNum);
+        
     }
 }

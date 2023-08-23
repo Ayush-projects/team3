@@ -37,6 +37,7 @@ namespace BankAtm.Entities
         [StringLength(4)]
         public string AtmPin { get; set; }
         
+        public int AccStatus { get; set; }
 
     }
 }

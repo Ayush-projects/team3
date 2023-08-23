@@ -10,7 +10,7 @@ namespace BankAtmTest
         private ICustomerService customerService;
         private DbContextOptionsBuilder<CustomerContext> dbOptions;
         public CustomerServiceUnitTest() {
-            dbOptions = new DbContextOptionsBuilder<CustomerContext>().UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankData;trusted_Connection=True");
+            dbOptions = new DbContextOptionsBuilder<CustomerContext>().UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankDataTest;trusted_Connection=True");
             db = new CustomerContext(dbOptions.Options);
         }
 

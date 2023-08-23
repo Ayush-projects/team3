@@ -27,6 +27,9 @@ namespace BankAtm.Migrations
                     b.Property<long>("AccNum")
                         .HasColumnType("bigint");
 
+                    b.Property<int>("AccStatus")
+                        .HasColumnType("int");
+
                     b.Property<string>("AccType")
                         .IsRequired()
                         .HasMaxLength(10)
