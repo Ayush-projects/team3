@@ -28,9 +28,11 @@ export default function UpdateDetails()
         })
     }
 
-    const handleSubmit = (event,param) =>{
-
-    event.preventDefault()
+    const handleSubmit = (event) =>{
+   console.log(event.target.value)
+   let param = event.target.value
+        console.log('in handle submit');
+    event.preventDefault();
 
         let {email,address,contactNum,id} = formData;
    let token = localStorage.getItem("token")
@@ -97,13 +99,13 @@ export default function UpdateDetails()
         if(param=='upd num')
         {
 
-        axios.put("https://localhost:5000/api/Customer/UpdateCustomerContactNo" ,{id,contactNum},{ headers: {
+        axios.put("https://localhost:5000/api/Customer/UpdateCustomerContactNo" ,{id,contactNo: contactNum},{ headers: {
           'Authorization': 'Bearer '+ token
         }})
         .then((response) => {  
           if(response.status==200)
           {
-            NotificationManager.success("Updated address:" + response.data.id, "Success", 4000);
+            NotificationManager.success("Updated Contact Num:" + response.data.id, "Success", 4000);
              setTimeout(()=>{
                window.location.reload()
              }, 4000)
@@ -149,7 +151,7 @@ export default function UpdateDetails()
             value = {formData.id}
              />
              <div class="d-grid gap-2 col-6 mx-auto incmar">
-            <button type="submit" class="btn btn-primary" onClick={() => handleSubmit('upd email')}>UpdateEmail</button>
+            <button type="submit" class="btn btn-primary" value='upd email' onClick={handleSubmit}>Update Email</button>
             </div>
         </div>
 
@@ -167,14 +169,14 @@ export default function UpdateDetails()
             value = {formData.id}
              />
             <div class="d-grid gap-2 col-6 mx-auto incmar">
-            <button type="submit" class="btn btn-primary" onClick={() => handleSubmit('upd address')}>UpdateAddress</button>
+            <button type="submit" class="btn btn-primary" value ='upd address'onClick={handleSubmit}>Update Address</button>
             </div>
         </div>
         </div>
         <div>
         <div class="mb-3 col">
-            <label for="contactnum" class="form-label">New ContactNum</label>
-            <input type="email" class="form-control " 
+            <label for="contactnum" class="form-label">New Contact Number</label>
+            <input type="text" class="form-control " 
             onChange={handleInputChange}
             name = "contactNum"
             value = {formData.contactNum}
@@ -186,7 +188,7 @@ export default function UpdateDetails()
             value = {formData.id}
              />
              <div class="d-grid gap-2 col-6 mx-auto incmar">
-            <button type="submit" class="btn btn-primary" onClick={() => handleSubmit('upd num')}>UpdateContactnum</button>
+            <button type="submit" class="btn btn-primary" value ='upd num' onClick={handleSubmit}>Update Contact Number</button>
             </div>
             
         </div>
