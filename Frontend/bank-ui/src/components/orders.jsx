@@ -14,7 +14,7 @@ function Orders () {
   
     const [orders, setOrders] = useState('');
     const [all_trans, set_all_trans] =  useState('')
-
+   const [test, setTest] = useState('')
     useEffect(() => {
    let token = localStorage.getItem("token")
       axios.get("https://localhost:5000/api/Transaction/GetLast10Transactions", {
@@ -46,7 +46,7 @@ function Orders () {
          NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
        });
       
-    }, []);
+    }, [test]);
 
 
     
@@ -104,7 +104,7 @@ function Orders () {
                                     </td>
                                     
                                     <td><span>{order.transDateTime}</span></td>
-                                    <td><span>${order.amount}</span></td>
+                                    <td><span>₹{order.amount}</span></td>
                                 </tr>
                             ))}
                         </tbody>

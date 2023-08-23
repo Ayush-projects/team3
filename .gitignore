@@ -4,3 +4,7 @@ Backend/BankAtm/obj/
 BankAPI/obj/
 Backend/.vs/
 BankAPI/.vs/
+Bankend/BankAtmTest/bin/
+Bankend/BankAtmTest/obj/
+/Backend/BankAtmTest/bin/Debug/net6.0
+/Backend/BankAtmTest/obj
