@@ -10,7 +10,7 @@ namespace BankAtmTest
         private ICustomerService customerService;
         private DbContextOptionsBuilder<CustomerContext> dbOptions;
         public CustomerServiceUnitTest() {
-            dbOptions = new DbContextOptionsBuilder<CustomerContext>().UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankDataTest;trusted_Connection=True");
+            dbOptions = new DbContextOptionsBuilder<CustomerContext>().UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankData;trusted_Connection=True");
             db = new CustomerContext(dbOptions.Options);
         }
 
@@ -43,6 +43,18 @@ namespace BankAtmTest
             List<Customer> listcstm = customerService.GetAllCustomers();
             Assert.Equal(7, listcstm.Count);
         }
-      
+
+        [Fact]
+        public void UpdateCustomerTest()
+        {
+            customerService = new CustomerService(db);
+            Customer cust = customerService.GetCustomerById(4);
+            string newAddress = "Hyderabad";
+            cust.Address = newAddress;
+            customerService.UpdateCustomer(cust);
+            Customer cust2 = customerService.GetCustomerById(4);
+            Assert.Equal(newAddress,cust2.Address);
+        }
+
     }
 }
