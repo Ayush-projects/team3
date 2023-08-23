@@ -49,9 +49,11 @@ namespace BankAtm.Service
 
         }
 
-        public List< Account> GetAccountByCustId(int id)
+        public List<Account> GetAccountByCustId(int id)
         {
-           return  (from  account in _customerContext.Accounts where account.Id == id select account).ToList();
+            Customer customer = _customerContext.Customers.Find(id);
+            if (customer == null) return new List<Account>();
+            return customer.Accounts.ToList();
         }
 
         public List<Account> GetAllAccounts()
@@ -59,15 +61,6 @@ namespace BankAtm.Service
            return _customerContext.Accounts.ToList();
         }
 
-        public int GetBalanceByAccNum(long  accNo)
-        {
-            Account account = _customerContext.Accounts.Find(accNo);
-            if(account!=null)
-            {
-                return account.Balance;
-            }
-            return -1;
-        }
         public void UpdateAccountDetails(Account account)
         {
             _customerContext.Accounts.Update(account);

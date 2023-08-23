@@ -1,95 +1,72 @@
-﻿using BankAtm.DTOS;
+﻿using AutoMapper;
+using BankAtm.DTOS;
 using BankAtm.Entities;
 using BankAtm.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Principal;
 using System.Text;
 
 namespace BankAtm.Controllers
 {
     [Route("api/[controller]")]
     [ApiController, Authorize(Roles ="admin")]
-    //[ApiController]
     public class AccountController : ControllerBase
     {
 
 
         private readonly IAccountService _accountService;
-        public AccountController(IAccountService accountService)
+        private readonly IMapper _mapper;
+
+        public AccountController(IAccountService accountService, IMapper mapper)
         {
             _accountService = accountService;
+            _mapper = mapper;
         }
         [HttpPost, Route("AddAccount")]
         public IActionResult Add(AccountDTO accountDTO)
         {
-            if(accountDTO.CardNo.Length!=16)
+            Account account = new Account()
             {
-                return StatusCode(201, new JsonResult("Invalid card number"));
-            }
-
-            if (accountDTO.AtmPin.Length != 4)
-            {
-                return StatusCode(201, new JsonResult("Invalid Atm Pin"));
-            }
-
-            try
-            {
-                Account account = new Account()
-                {
-                   Id = accountDTO.Id,
-                   AccType = accountDTO.AccType,
-                   Balance = accountDTO.Balance,
-                   CardName = accountDTO.CardName,
-                   CardNo = accountDTO.CardNo,
-                   AtmPin= accountDTO.AtmPin,
-                };
-                account.AccNum = GenerateAccNum(account.AccType, accountDTO.Id);
-                _accountService.AddAccountDetails(account);
-                return StatusCode(200, account);
-
-            }
-            catch (Exception ex) { 
-                return StatusCode(201, new JsonResult("Invalid Customer ID")); }
+                Id = accountDTO.Id,
+                AccType = accountDTO.AccType,
+                Balance = accountDTO.Balance,
+                CardName = accountDTO.CardName,
+                CardNo = accountDTO.CardNo,
+                AtmPin= accountDTO.AtmPin,
+            };
+            account.AccNum = GenerateAccNum(account.AccType, account.Id);
+            _accountService.AddAccountDetails(account);
+            AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
+            return StatusCode(200, accountDetails);
         }
+
         [HttpGet, Route("GetAccountById")]
         public IActionResult GetAccountById(int id)
         {
-            try
-            {
-                List<Account> li = _accountService.GetAccountByCustId(id);
-                return StatusCode(200, li);
-
-
-            }
-            catch (Exception ex) { throw; }
+            List<Account> li = _accountService.GetAccountByCustId(id);
+            List<AccountDetailsDTO> details = _mapper.Map<List<AccountDetailsDTO>>(li);
+            return StatusCode(200, details);
         }
 
         [HttpGet, Route("GetBalanceByAccNo")]
         public IActionResult GetBalanceByaccNo(long accNo)
         {
-            int bal = _accountService.GetBalanceByAccNum(accNo);
-            if(bal==-1)
+            Account account = _accountService.GetAccountByAccNo(accNo);
+            if (account == null)
             {
                 return StatusCode(201, new JsonResult("Account doesn't exists"));
             }
-            return StatusCode(200, bal);
+            else return StatusCode(200, account.Balance);
         }
 
         [HttpGet, Route("GetAccountByAccNo")]
         public IActionResult GetAccountbyAccNo(long AccNo)
         {
-            try
-            {
-               Account account = _accountService.GetAccountByAccNo(AccNo);
-                if(account==null)
-                {
-                    return StatusCode(201, new JsonResult("No account with this Account Number"));
-                }
-                return StatusCode(200, account);
-
-
-            }
-            catch (Exception ex) { throw; }
+            Account account = _accountService.GetAccountByAccNo(AccNo);
+            if(account==null) return StatusCode(201, new JsonResult("No account with this Account Number"));
+            AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
+            return StatusCode(200, accountDetails);
         }
 
         [HttpDelete, Route("DeleteAccountByAccNo")]
@@ -99,8 +76,6 @@ namespace BankAtm.Controllers
             {
                 _accountService.DeleteAccount(AccNo);
                 return StatusCode(200, new JsonResult("Deleted"));
-
-
             }
             catch (Exception ex) { return StatusCode(201, new JsonResult("No such account number exists")); }
         }
@@ -111,9 +86,8 @@ namespace BankAtm.Controllers
             try
             {
                 List<Account> accounts = _accountService.GetAllAccounts();
-                return StatusCode(200, accounts);
-
-
+                List<AccountDetailsDTO> details = _mapper.Map<List<AccountDetailsDTO>>(accounts);
+                return StatusCode(200, details);
             }
             catch (Exception ex) { throw; }
         }
@@ -134,21 +108,18 @@ namespace BankAtm.Controllers
             if(account.AtmPin.Equals(changePinDTO.AtmPin)==false) {
                 return StatusCode(201, new JsonResult("wrong pin"));
             }
-            if(changePinDTO.NewPin.Length!=4)
-            {
-                return StatusCode(201, new JsonResult("pin should be 4 digits"));
-            }
             account.AtmPin = changePinDTO.NewPin;
             _accountService.UpdatePin(account);
-            return StatusCode(200, account);
+            AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
+            return StatusCode(200, accountDetails);
         }
 
         private static Random RNG = new Random();
 
-        private string Create6DigitString()
+        private string Create4DigitString()
         {
             var builder = new StringBuilder();
-            while (builder.Length < 6)
+            while (builder.Length < 4)
             {
                 builder.Append(RNG.Next(10).ToString());
             }
@@ -157,7 +128,9 @@ namespace BankAtm.Controllers
 
         private long GenerateAccNum(string AccType, int CustomerId) {
             var builder = new StringBuilder();
-            builder.Append(Create6DigitString());
+            builder.Append(Create4DigitString());
+            int numAccounts = _accountService.GetAccountByCustId(CustomerId).Count();
+            builder.Append(String.Format("{0:00}", numAccounts));
             string acctypeid = "0000";
             switch(AccType){
                 case "Savings":

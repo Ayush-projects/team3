@@ -12,77 +12,40 @@ namespace BankAtm.Service
         }
         public void AddTransaction(Transaction transaction)
         {
-            Account Toacc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.ToAccNum); 
-            if(Toacc == null)
+            Account acc = _transactionContext.Accounts.Find(transaction.AccNum);
+            if(acc == null)
             {
-                throw new Exception("Account2 doesnt't exists");
+                throw new Exception("Customer Account doesn't exist");
             }
-            Account acc = _transactionContext.Accounts.FirstOrDefault(p => p.AccNum == transaction.AccNum);
-            if (acc != null)
+            if (acc.Balance < transaction.Amount)
             {
-                
-                if(transaction.TransType.Equals("Withdraw") || transaction.TransType.Equals("withdraw"))
+                throw new Exception("Insufficient Balance");
+            }
+            if (transaction.TransType.Equals("withdraw", StringComparison.CurrentCultureIgnoreCase))
+            {
+                acc.Balance = acc.Balance - transaction.Amount;
+                _transactionContext.Accounts.Update(acc);
+            }
+            else
+            {
+                Account Toacc = _transactionContext.Accounts.Find(transaction.ToAccNum);
+                if (Toacc == null)
                 {
-                    if (transaction.AccNum==transaction.ToAccNum)
-                    {
-                        if (acc.Balance < transaction.Amount)
-                        {
-                            throw new Exception("Insufficient Balance");
-                        }
-                        acc.Balance = acc.Balance - transaction.Amount;
-                    }
-                    else
-                    {
-                        if (acc.Balance < transaction.Amount)
-                        {
-                            throw new Exception("Insufficient Balance");
-                        }
-                        acc.Balance = acc.Balance - transaction.Amount;
-                        Toacc.Balance = Toacc.Balance + transaction.Amount;
-                    }
-                        
+                    throw new Exception("Account2 doesnt't exists");
                 }
-                else
+                if (transaction.TransType.Equals("Transfer"), StringComparison.CurrentCultureIgnoreCase))
                 {
-                    if(transaction.TransType.Equals("Transfer"))
-                    {
-                        if (acc.Balance < transaction.Amount)
-                        {
-                            throw new Exception("Insufficient Balance");
-                        }
-                        acc.Balance = acc.Balance - transaction.Amount;
-                        Toacc.Balance = Toacc.Balance + transaction.Amount;
-                    }
-                    else
-                    {
-                        if (transaction.AccNum == transaction.ToAccNum)
-                        {
-
-                            acc.Balance = acc.Balance + transaction.Amount;
-                        }
-                        else
-                        {
-                            if (Toacc.Balance < transaction.Amount)
-                            {
-                                throw new Exception("Insuffiecient Balance");
-                            }
-                            acc.Balance = acc.Balance + transaction.Amount;
-                            Toacc.Balance = Toacc.Balance - transaction.Amount;
-                        }
-                    }
-                    
-                    
+                    acc.Balance = acc.Balance - transaction.Amount;
+                    Toacc.Balance = Toacc.Balance + transaction.Amount;
                 }
                 _transactionContext.Accounts.Update(acc);
                 _transactionContext.Accounts.Update(Toacc);
             }
-            // _transactionContext.Accounts.
             try
             {
                 _transactionContext.Transactions.Add(transaction);
                 _transactionContext.SaveChanges();
             }catch(DbUpdateException ex) { throw ex; }
-           
         }
 
         public void DeleteTransaction(Guid TransId)
