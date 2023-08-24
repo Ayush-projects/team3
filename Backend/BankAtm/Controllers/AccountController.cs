@@ -4,6 +4,7 @@ using BankAtm.Entities;
 using BankAtm.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Principal;
 using System.Text;
 
@@ -26,6 +27,14 @@ namespace BankAtm.Controllers
         [HttpPost, Route("AddAccount")]
         public IActionResult Add(AccountDTO accountDTO)
         {
+            if(accountDTO.CardNo.Length!=16)
+            {
+                return StatusCode(201, new JsonResult("Card length must be 16 digits"));
+            }
+            if (accountDTO.AtmPin.Length != 4)
+            {
+                return StatusCode(201, new JsonResult("Pin must be 4 digits"));
+            }
             Account account = new Account()
             {
                 Id = accountDTO.Id,
@@ -36,9 +45,16 @@ namespace BankAtm.Controllers
                 AtmPin= accountDTO.AtmPin,
             };
             account.AccNum = GenerateAccNum(account.AccType, account.Id);
-            _accountService.AddAccountDetails(account);
-            AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
-            return StatusCode(200, accountDetails);
+            try
+            {
+                _accountService.AddAccountDetails(account);
+                AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
+                return StatusCode(200, accountDetails);
+            }catch(DbUpdateException ex)
+            {
+                return StatusCode(201, new JsonResult("Invalid Customer Id"));
+            }
+            
         }
 
         [HttpGet, Route("GetAccountById")]

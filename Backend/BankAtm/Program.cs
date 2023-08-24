@@ -15,6 +15,7 @@ var connection = builder.Configuration.GetConnectionString("ConStr");
 builder.Services.AddTransient<ICustomerService, CustomerService>();
 builder.Services.AddTransient<IAccountService, AccountService>();
 builder.Services.AddTransient<ITransactionService, TransactionService>();
+builder.Services.AddTransient<IChequeService, ChequeService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddDbContext<CustomerContext>(x => x.UseSqlServer(connection));
 builder.Services.AddCors();
