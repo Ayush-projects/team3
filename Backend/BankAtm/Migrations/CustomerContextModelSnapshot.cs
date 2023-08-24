@@ -50,7 +50,8 @@ namespace BankAtm.Migrations
 
                     b.Property<string>("CardNo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(16)
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<int>("Id")
                         .HasColumnType("int");
@@ -157,7 +158,7 @@ namespace BankAtm.Migrations
             modelBuilder.Entity("BankAtm.Entities.Account", b =>
                 {
                     b.HasOne("BankAtm.Entities.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Accounts")
                         .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -168,12 +169,22 @@ namespace BankAtm.Migrations
             modelBuilder.Entity("BankAtm.Entities.Transaction", b =>
                 {
                     b.HasOne("BankAtm.Entities.Account", "Account")
-                        .WithMany()
+                        .WithMany("Transactions")
                         .HasForeignKey("AccNum")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("BankAtm.Entities.Account", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("BankAtm.Entities.Customer", b =>
+                {
+                    b.Navigation("Accounts");
                 });
 #pragma warning restore 612, 618
         }

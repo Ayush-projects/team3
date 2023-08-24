@@ -41,8 +41,8 @@ export default function CashWithdraw()
             return NotificationManager.error("Please fill the complete form ","Error",4000);
         }
 
-        if(formData.accnum.length<16)
-        return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
+        // if(formData.accnum.length<16)
+        // return NotificationManager.error("Account number must be of 16 numerical digits","Error",4000);
 
        
         let {accnum,amount} = formData;
