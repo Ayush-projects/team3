@@ -45,7 +45,7 @@ namespace BankAtm.Migrations
                     AccNum = table.Column<long>(type: "bigint", nullable: false),
                     Id = table.Column<int>(type: "int", nullable: false),
                     AccType = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    CardNo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardNo = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     CardName = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false),
                     Balance = table.Column<int>(type: "int", nullable: false),
                     AtmPin = table.Column<string>(type: "nvarchar(4)", maxLength: 4, nullable: false),

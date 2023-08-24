@@ -33,8 +33,8 @@ namespace BankAtm.Controllers
                     Email= customerDTO.Email,
                 };
                 _customerService.AddCustomer(customer);
-                CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
-                return StatusCode(200, customerDetails);
+              //  CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
+                return StatusCode(200, customer);
                 
             }catch (Exception ex) {
                 Console.WriteLine(ex.ToString());
