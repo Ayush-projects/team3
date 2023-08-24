@@ -14,8 +14,8 @@ namespace BankAtm.Entities
         {
             base.OnConfiguring(optionsBuilder);
             optionsBuilder
-                .UseLazyLoadingProxies()
-                .UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankData;trusted_Connection=True");
+                .UseLazyLoadingProxies();
+                //.UseSqlServer("Server=WINDOWS-BVQNF6J;Database=BankData;trusted_Connection=True");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
