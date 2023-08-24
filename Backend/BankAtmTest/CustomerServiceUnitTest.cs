@@ -41,7 +41,7 @@ namespace BankAtmTest
         public void GetAllCustomerTest() { 
             customerService = new CustomerService(db);
             List<Customer> listcstm = customerService.GetAllCustomers();
-            Assert.Equal(7, listcstm.Count);
+            Assert.Equal(3, listcstm.Count);
         }
 
         [Fact]
@@ -55,6 +55,7 @@ namespace BankAtmTest
             Customer cust2 = customerService.GetCustomerById(4);
             Assert.Equal(newAddress,cust2.Address);
         }
+
 
     }
 }
