@@ -3,6 +3,7 @@ using BankAtm.DTOS;
 using BankAtm.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BankAtm.Controllers
 {
@@ -93,7 +94,7 @@ namespace BankAtm.Controllers
                     return StatusCode(200, customerDetails);
 
                 }
-                catch(Exception ex)
+                catch(DbUpdateException ex)
                 {
                     return StatusCode(201, new JsonResult("Email Id already exists"));
                 }

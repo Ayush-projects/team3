@@ -45,39 +45,63 @@ namespace BankAtm.Controllers
                 Account acc = _accountService.GetAccountByAccNo(transactionDTO.AccNum1);
                 if (acc == null)
                 {
-                    throw new Exception("Account2 doesnt't exists");
+                    throw new Exception("Account doesnt't exists");
                 }
                 if (acc.AccStatus == 0)
                 {
                     throw new Exception("Account is disabled");
                 }
-                if (acc.Balance < transactionDTO.Amount)
-                {
-                    throw new Exception("Insufficient Balance");
-                }
+               
                 if (transactionDTO.TransType.Equals("withdraw", StringComparison.CurrentCultureIgnoreCase))
                 {
+                    if (acc.Balance < transactionDTO.Amount)
+                    {
+                        throw new Exception("Insufficient Balance");
+                    }
                     acc.Balance = acc.Balance - transactionDTO.Amount;
                     _accountService.UpdateAccountDetails(acc);
                 }
                 else
                 {
-                    Account Toacc = _accountService.GetAccountByAccNo(transactionDTO.AccNum2);
-                    if (Toacc == null)
-                    {
-                        throw new Exception("Account2 doesnt't exists");
-                    }
-                    if (Toacc.AccStatus == 0)
-                    {
-                        throw new Exception("Account is disabled");
-                    }
+                    
                     if (transactionDTO.TransType.Equals("Transfer", StringComparison.CurrentCultureIgnoreCase))
                     {
+                        Account Toacc = _accountService.GetAccountByAccNo(transactionDTO.AccNum2);
+                        if (Toacc == null)
+                        {
+                            throw new Exception("Account2 doesnt't exists");
+                        }
+                        if (Toacc.AccStatus == 0)
+                        {
+                            throw new Exception("Account2 is disabled");
+                        }
+                        if (acc.Balance < transactionDTO.Amount)
+                        {
+                            throw new Exception("Insufficient Balance");
+                        }
+
                         acc.Balance = acc.Balance - transactionDTO.Amount;
                         Toacc.Balance = Toacc.Balance + transactionDTO.Amount;
+                        _accountService.UpdateAccountDetails(acc);
+                        _accountService.UpdateAccountDetails(Toacc);
                     }
-                    _accountService.UpdateAccountDetails(acc);
-                    _accountService.UpdateAccountDetails(Toacc);
+                    else
+                    {
+                        Account Toacc = _accountService.GetAccountByAccNo(transactionDTO.AccNum1);
+                        if (Toacc == null)
+                        {
+                            throw new Exception("Account doesnt't exists");
+                        }
+                        if (Toacc.AccStatus == 0)
+                        {
+                            throw new Exception("Account is disabled");
+                        }
+                        Toacc.Balance = Toacc.Balance + transactionDTO.Amount;
+                        
+                        _accountService.UpdateAccountDetails(Toacc);
+
+                    }
+                   
                 }
                 Transaction transaction = new Transaction()
                 {
