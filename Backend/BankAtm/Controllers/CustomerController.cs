@@ -67,11 +67,11 @@ namespace BankAtm.Controllers
         }
 
         [HttpDelete, Route("DeleteCustomerById")]
-        public IActionResult DeleteCustById(int id)
+        public IActionResult DeleteCustByEmail(string email)
         {
             try
             {
-                _customerService.DeleteCustomer(id);
+                _customerService.DeleteCustomer(email);
                 return StatusCode(200, new JsonResult("Deleted"));
             }
             catch (Exception ex) { return StatusCode(201,new JsonResult("Customer Id doesn't exists")); }

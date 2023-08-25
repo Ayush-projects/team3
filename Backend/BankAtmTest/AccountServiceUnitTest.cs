@@ -41,21 +41,22 @@ namespace BankAtmTest
         {
             //Arrange
             accountService = new AccountService(db);
-            Account account = accountService.GetAccountByAccNo(4532290000000001);
-            Assert.NotNull(account);
+            Account account = accountService.GetAccountByCardNum("4455335566778800");
+            Account acc = accountService.GetAccountByAccNo(account.AccNum);
+            Assert.NotNull(acc);
 
         }
         
 
         [Fact]
-        public void UpdateCustomerTest()
+        public void EditCustomerTest()
         {
             accountService = new AccountService(db);
-            Account account = accountService.GetAccountByAccNo(4532290000000001);
+            Account account = accountService.GetAccountByCardNum("4455335566778800");
             string atmpin = "2222";
             account.AtmPin = atmpin;
             accountService.UpdateAccountDetails(account);
-            Account acc = accountService.GetAccountByAccNo(4532290000000001);
+            Account acc = accountService.GetAccountByCardNum("4455335566778800");
             Assert.Equal(atmpin,acc.AtmPin);
         }
 
@@ -63,8 +64,20 @@ namespace BankAtmTest
         public void GetBalanceByAccNumTest()
         {
             accountService = new AccountService(db);
-            Account acc = accountService.GetAccountByAccNo(4532290000000001);
-            Assert.Equal(1400, acc.Balance);
+            Account account = accountService.GetAccountByCardNum("4455335566778800");
+            Account acc = accountService.GetAccountByAccNo(account.AccNum);
+            Assert.Equal(100, acc.Balance);
         }
+
+        [Fact]
+        public void RemoveAccountTest()
+        {
+            accountService = new AccountService(db);
+            Account account = accountService.GetAccountByCardNum("4455335566778800");
+            accountService.DeleteAccount(account.AccNum);
+            Account acc = accountService.GetAccountByCardNum("4455335566778800");
+            Assert.Null(acc);
+;        }
     }
+
 }
