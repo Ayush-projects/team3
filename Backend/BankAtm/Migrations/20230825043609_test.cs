@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BankAtm.Migrations
 {
-    public partial class NewMigartion : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -17,7 +17,7 @@ namespace BankAtm.Migrations
                     AccNum = table.Column<long>(type: "bigint", nullable: false),
                     amount = table.Column<int>(type: "int", nullable: false),
                     status = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
-                    TransDateTime = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                    TransDateTime = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false)
                 },
                 constraints: table =>
                 {
