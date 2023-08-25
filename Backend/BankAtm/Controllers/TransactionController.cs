@@ -14,11 +14,14 @@ namespace BankAtm.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
+        private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
         
-        public TransactionController(ITransactionService transactionService, IMapper mapper)
+        public TransactionController(ITransactionService transactionService, IAccountService accountService,
+            IMapper mapper)
         {
             _transactionService = transactionService;
+            _accountService = accountService;
             _mapper = mapper;
         }
 
@@ -39,19 +42,55 @@ namespace BankAtm.Controllers
         {
             try
             {
+                Account acc = _accountService.GetAccountByAccNo(transactionDTO.AccNum1);
+                if (acc == null)
+                {
+                    throw new Exception("Account2 doesnt't exists");
+                }
+                if (acc.AccStatus == 0)
+                {
+                    throw new Exception("Account is disabled");
+                }
+                if (acc.Balance < transactionDTO.Amount)
+                {
+                    throw new Exception("Insufficient Balance");
+                }
+                if (transactionDTO.TransType.Equals("withdraw", StringComparison.CurrentCultureIgnoreCase))
+                {
+                    acc.Balance = acc.Balance - transactionDTO.Amount;
+                    _accountService.UpdateAccountDetails(acc);
+                }
+                else
+                {
+                    Account Toacc = _accountService.GetAccountByAccNo(transactionDTO.AccNum2);
+                    if (Toacc == null)
+                    {
+                        throw new Exception("Account2 doesnt't exists");
+                    }
+                    if (Toacc.AccStatus == 0)
+                    {
+                        throw new Exception("Account is disabled");
+                    }
+                    if (transactionDTO.TransType.Equals("Transfer", StringComparison.CurrentCultureIgnoreCase))
+                    {
+                        acc.Balance = acc.Balance - transactionDTO.Amount;
+                        Toacc.Balance = Toacc.Balance + transactionDTO.Amount;
+                    }
+                    _accountService.UpdateAccountDetails(acc);
+                    _accountService.UpdateAccountDetails(Toacc);
+                }
                 Transaction transaction = new Transaction()
                 {
                     AccNum = transactionDTO.AccNum1,
                     TransType = transactionDTO.TransType,
                     TransDateTime = DateTime.Now,
-                    ToAccNum=transactionDTO.AccNum2,
-                    Amount= transactionDTO.Amount,
+                    ToAccNum = transactionDTO.AccNum2,
+                    Amount = transactionDTO.Amount,
                 };
                 _transactionService.AddTransaction(transaction);
                 TransactionDetailsDTO transactionDetails = _mapper.Map<TransactionDetailsDTO>(transaction);
                 return StatusCode(200, transactionDetails);
-            }catch (DbUpdateException ex) { return StatusCode(201, new JsonResult("No such Account number exists ")); }
-            catch(Exception ex) {return StatusCode(201, new JsonResult(ex.Message)); }
+            }catch(Exception ex) {return StatusCode(201, new JsonResult(ex.Message)); }
         }
 
         [HttpGet, Route("GetAllTransactions")]

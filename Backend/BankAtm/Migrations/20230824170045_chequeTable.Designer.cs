@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAtm.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230824035630_test")]
-    partial class test
+    [Migration("20230824170045_chequeTable")]
+    partial class chequeTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -66,6 +66,32 @@ namespace BankAtm.Migrations
                     b.HasIndex("Id");
 
                     b.ToTable("Accounts");
+                });
+
+            modelBuilder.Entity("BankAtm.Entities.Cheque", b =>
+                {
+                    b.Property<int>("ChequeNo")
+                        .HasColumnType("int");
+
+                    b.Property<long>("AccNum")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("TransDateTime")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("varchar(12)");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("varchar(10)");
+
+                    b.HasKey("ChequeNo");
+
+                    b.ToTable("Cheques");
                 });
 
             modelBuilder.Entity("BankAtm.Entities.Customer", b =>

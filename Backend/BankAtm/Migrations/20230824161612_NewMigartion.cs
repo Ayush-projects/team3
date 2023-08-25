@@ -5,10 +5,25 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace BankAtm.Migrations
 {
-    public partial class test : Migration
+    public partial class NewMigartion : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Cheques",
+                columns: table => new
+                {
+                    ChequeNo = table.Column<int>(type: "int", nullable: false),
+                    AccNum = table.Column<long>(type: "bigint", nullable: false),
+                    amount = table.Column<int>(type: "int", nullable: false),
+                    status = table.Column<string>(type: "varchar(10)", maxLength: 10, nullable: false),
+                    TransDateTime = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cheques", x => x.ChequeNo);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
@@ -115,6 +130,9 @@ namespace BankAtm.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Cheques");
+
             migrationBuilder.DropTable(
                 name: "Transactions");
 

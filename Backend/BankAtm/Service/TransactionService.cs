@@ -12,48 +12,8 @@ namespace BankAtm.Service
         }
         public void AddTransaction(Transaction transaction)
         {
-            Account acc = _transactionContext.Accounts.Find(transaction.AccNum);
-            if(acc == null)
-            {
-                throw new Exception("Account2 doesnt't exists");
-            }
-            if (acc.AccStatus == 0)
-            {
-                throw new Exception("Account is disabled");
-            }
-            if (acc.Balance < transaction.Amount)
-            {
-                throw new Exception("Insufficient Balance");
-            }
-            if (transaction.TransType.Equals("withdraw", StringComparison.CurrentCultureIgnoreCase))
-            {
-                acc.Balance = acc.Balance - transaction.Amount;
-                _transactionContext.Accounts.Update(acc);
-            }
-            else
-            {
-                Account Toacc = _transactionContext.Accounts.Find(transaction.ToAccNum);
-                if (Toacc == null)
-                {
-                    throw new Exception("Account2 doesnt't exists");
-                }
-                if (Toacc.AccStatus == 0)
-                {
-                    throw new Exception("Account is disabled");
-                }
-                if (transaction.TransType.Equals("Transfer", StringComparison.CurrentCultureIgnoreCase))
-                {
-                    acc.Balance = acc.Balance - transaction.Amount;
-                    Toacc.Balance = Toacc.Balance + transaction.Amount;
-                }
-                _transactionContext.Accounts.Update(acc);
-                _transactionContext.Accounts.Update(Toacc);
-            }
-            try
-            {
-                _transactionContext.Transactions.Add(transaction);
-                _transactionContext.SaveChanges();
-            }catch(DbUpdateException ex) { throw ex; }
+            _transactionContext.Transactions.Add(transaction);
+            _transactionContext.SaveChanges();
         }
 
         public void DeleteTransaction(Guid TransId)
