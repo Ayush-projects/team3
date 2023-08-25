@@ -33,7 +33,8 @@ namespace BankAtmTest
         {
             //Arrange
             customerService = new CustomerService(db);
-            Customer customer = customerService.GetCustomerById(1);
+            Customer cust = customerService.GetcustomerByEmail("Test1@gmail.com");
+            Customer customer = customerService.GetCustomerById(cust.Id);
             Assert.NotNull(customer);
 
         }
@@ -48,14 +49,21 @@ namespace BankAtmTest
         public void UpdateCustomerTest()
         {
             customerService = new CustomerService(db);
-            Customer cust = customerService.GetCustomerById(4);
+            Customer cust = customerService.GetcustomerByEmail("Test1@gmail.com");
             string newAddress = "Hyderabad";
             cust.Address = newAddress;
             customerService.UpdateCustomer(cust);
-            Customer cust2 = customerService.GetCustomerById(4);
+            Customer cust2 = customerService.GetcustomerByEmail("Test1@gmail.com");
             Assert.Equal(newAddress,cust2.Address);
         }
 
+        [Fact ]
+        public void DelectCustomerTest()
+        {
+            customerService = new CustomerService(db);
+            customerService.DeleteCustomer("Test1@gmail.com");
+            Assert.Null(customerService.GetcustomerByEmail("Test1@gmail.com"));
+        }
 
     }
 }

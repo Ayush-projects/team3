@@ -8,6 +8,6 @@ public interface ICustomerService
     List<Customer> GetAllCustomers();
     Customer GetCustomerById(int id);
     void UpdateCustomer(Customer customer);
-    void DeleteCustomer(int id);
+    void DeleteCustomer(string email);
     Customer GetcustomerByEmail(string email);
 }

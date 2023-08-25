@@ -25,11 +25,11 @@ namespace BankAtm.Service
 
         }
 
-        public void DeleteCustomer(int id)
+        public void DeleteCustomer(string email)
         {
             try
             {
-                _dbcustomer.Customers.Remove(GetCustomerById(id));
+                _dbcustomer.Customers.Remove(GetcustomerByEmail(email));
                 _dbcustomer.SaveChanges();
             }catch(ArgumentNullException ex) {
                 Console.WriteLine(ex.Message);
