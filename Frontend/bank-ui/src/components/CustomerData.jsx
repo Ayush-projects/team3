@@ -66,7 +66,7 @@ export default function CustomerData({name, accountNumber, balance, type, cardNu
 			</div>
 		</div>
 
-
+<a href="/custDash" class="btn btn-success">Search Another Account</a>
 		<div class="middle-container d-flex justify-content-between align-items-center mt-3 p-2">
 				<div class="dollar-div px-3">
 					
