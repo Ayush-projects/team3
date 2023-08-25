@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BankAtm.Migrations
 {
     [DbContext(typeof(CustomerContext))]
-    [Migration("20230824170045_chequeTable")]
-    partial class chequeTable
+    [Migration("20230825043609_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

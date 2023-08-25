@@ -57,7 +57,9 @@ function SearchBar() {
             }
         })
     }
+    
         return (
+       
             <>
             
             <div class="container">
@@ -92,43 +94,8 @@ function SearchBar() {
 
 
 
-
-
-        //     <div className="container">
-
-        //     <div className="row height d-flex justify-content-center align-items-center">
-
-        //       <div className="col-md-6">
-
-        //         <div className="form">
-        //           {/* <i className="fa fa-search"></i> */}
-        //           {/* <input type="input" className="form-control form-input" placeholder="Search by account number..."/>
-        //           <button> Search </button> */}
-
-        //           <div class="form-outline mb-3">
-        //     <input type="input" id="form3Example4" class="form-control form-control-lg"
-        //       placeholder="Enter Account Number" value={accountNumber} onChange={function(e){setAccountNumber(e.target.value)}}/>
-        //     <label class="form-label" for="form3Example4"></label>
-           
-        //   </div>
-
-
-        //   <div class="text-center text-lg-start mt-4 pt-2">
-        //     <button type="button" class="btn btn-primary btn-sm"
-        //       style={{paddingLeft: "2.5rem", "paddingRight": "2.5rem"}} onClick={submit}>Search</button>
             
-        //   </div>
-        //           {/* <span className="left-pan"> <FaSearch /> </span>  */}
-                
-        //     </div>
-        //     {show==true? (<CustomerData name= {account.name} accountNumber={account.accountNumber} type= {account.type} cardNumber={account.cardNumber}  balance= {account.balance} />): <div></div>};
-            
-                
-        //       </div>
-              
-        //     </div>
-            
-        //   </div>
+          
             
     );
     }

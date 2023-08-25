@@ -31,6 +31,7 @@ function DashboardHeader () {
                     <li><a class ="dropdown-item" href = '/fundtrans'>Transfer</a></li>
                     <li><a class ="dropdown-item" href = '/pinChange'>Pin Change</a></li>
                     <li><a class ="dropdown-item" href = '/upDe'>Update Details</a></li>
+                    <li><a class ="dropdown-item" href = '/chequeStatus'>Check Cheque Status</a></li>
                     <li><a class ="dropdown-item" href = '/ends'>Enable/Disable Account</a></li>
                 </ul>
                 
