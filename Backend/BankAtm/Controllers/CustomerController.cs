@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankAtm.CustomExceptions;
 using BankAtm.DTOS;
 using BankAtm.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -27,19 +28,21 @@ namespace BankAtm.Controllers
 
                 Customer customer = new Customer()
                 {
-                   // Id= customerDTO.Id,
-                    Name= customerDTO.Name,
-                    ContactNo= customerDTO.ContactNo,
-                    Address= customerDTO.Address,
-                    Email= customerDTO.Email,
+                    // Id= customerDTO.Id,
+                    Name = customerDTO.Name,
+                    ContactNo = customerDTO.ContactNo,
+                    Address = customerDTO.Address,
+                    Email = customerDTO.Email,
                 };
                 _customerService.AddCustomer(customer);
                 CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
                 return StatusCode(200, customerDetails);
-                
-            }catch (Exception ex) {
-                Console.WriteLine(ex.ToString());
-                return StatusCode(201, new JsonResult("Customer Already Exists")); }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(201, new EmailIdException());
+            }
         }
 
         [HttpGet, Route("GetCustomerById")]
@@ -48,7 +51,7 @@ namespace BankAtm.Controllers
             try
             { 
                 Customer customer = _customerService.GetCustomerById(id);
-                if(customer == null) return StatusCode(201, new JsonResult("No customer with this customer id"));
+                if(customer == null) return StatusCode(201, new CustomerExceptions());
                 CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
                 return StatusCode(200, customerDetails);
             }
@@ -75,7 +78,7 @@ namespace BankAtm.Controllers
                 _customerService.DeleteCustomer(email);
                 return StatusCode(200, new JsonResult("Deleted"));
             }
-            catch (Exception ex) { return StatusCode(201,new JsonResult("Customer Id doesn't exists")); }
+            catch (Exception ex) { return StatusCode(201,new CustomerExceptions()); }
         }
         [HttpPut, Route("UpdateCustomerEmail")]
         public IActionResult UpdateCustEmail(CustomerEmail customeremail)
@@ -96,12 +99,12 @@ namespace BankAtm.Controllers
                 }
                 catch(DbUpdateException ex)
                 {
-                    return StatusCode(201, new JsonResult("Email Id already exists"));
+                    return StatusCode(201, new EmailIdException());
                 }
             }
             else
             {
-                return StatusCode(202,new JsonResult("Invalid ID"));
+                return StatusCode(201,new CustomerExceptions());
             }
         }
 
@@ -128,7 +131,7 @@ namespace BankAtm.Controllers
             }
             else
             {
-                return StatusCode(202, new JsonResult("Invalid ID"));
+                return StatusCode(201, new CustomerExceptions());
             }
         }
 
@@ -156,7 +159,7 @@ namespace BankAtm.Controllers
             }
             else
             {
-                return StatusCode(202, new JsonResult("Invalid ID"));
+                return StatusCode(201, new CustomerExceptions());
             }
 
         }

@@ -65,7 +65,7 @@ function Enable()
           }
           else
           {
-            NotificationManager.error(response.data.value, "Error", 4000);
+            NotificationManager.error(response.data.message, "Error", 4000);
           }
         } ).catch((err)=>{
          console.log(err)

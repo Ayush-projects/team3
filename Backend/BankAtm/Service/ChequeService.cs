@@ -1,4 +1,5 @@
-﻿using BankAtm.Entities;
+﻿using BankAtm.CustomExceptions;
+using BankAtm.Entities;
 
 namespace BankAtm.Service
 {
@@ -13,11 +14,11 @@ namespace BankAtm.Service
             Account acc = _customerContext.Accounts.Find(accNum);
             if (acc == null)
             {
-                throw new Exception("Invalid AccNum");
+                throw new InvalidAccNum();
             }
             if(acc.AccStatus==0)
             {
-                throw new Exception("Account disabled");
+                throw new AccountDisabled();
             }
             return (from cheque in _customerContext.Cheques where cheque.AccNum== accNum select cheque).ToList();
 

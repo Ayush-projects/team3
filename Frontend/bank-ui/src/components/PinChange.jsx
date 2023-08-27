@@ -80,7 +80,7 @@ export default function PinChange()
   
           {
           
-            NotificationManager.error(response.data.value, "Error", 30000);
+            NotificationManager.error(response.data.message, "Error", 30000);
           }
   
         } ).catch((err)=>{

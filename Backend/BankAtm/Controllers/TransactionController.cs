@@ -6,6 +6,7 @@ using BankAtm.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using AutoMapper;
+using BankAtm.CustomExceptions;
 
 namespace BankAtm.Controllers
 {
@@ -45,18 +46,18 @@ namespace BankAtm.Controllers
                 Account acc = _accountService.GetAccountByAccNo(transactionDTO.AccNum1);
                 if (acc == null)
                 {
-                    throw new Exception("Account doesnt't exists");
+                    throw new InvalidAccNum();
                 }
                 if (acc.AccStatus == 0)
                 {
-                    throw new Exception("Account is disabled");
+                    throw new AccountDisabled();
                 }
                
                 if (transactionDTO.TransType.Equals("withdraw", StringComparison.CurrentCultureIgnoreCase))
                 {
                     if (acc.Balance < transactionDTO.Amount)
                     {
-                        throw new Exception("Insufficient Balance");
+                        throw new InsufficientBalance();
                     }
                     acc.Balance = acc.Balance - transactionDTO.Amount;
                     _accountService.UpdateAccountDetails(acc);
@@ -77,7 +78,7 @@ namespace BankAtm.Controllers
                         }
                         if (acc.Balance < transactionDTO.Amount)
                         {
-                            throw new Exception("Insufficient Balance");
+                            throw new InsufficientBalance();
                         }
 
                         acc.Balance = acc.Balance - transactionDTO.Amount;
@@ -90,7 +91,7 @@ namespace BankAtm.Controllers
                         Account Toacc = _accountService.GetAccountByAccNo(transactionDTO.AccNum1);
                         if (Toacc == null)
                         {
-                            throw new Exception("Account doesnt't exists");
+                            throw new InvalidAccNum();
                         }
                         if (Toacc.AccStatus == 0)
                         {

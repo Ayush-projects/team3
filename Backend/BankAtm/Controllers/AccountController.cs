@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BankAtm.CustomExceptions;
 using BankAtm.DTOS;
 using BankAtm.Entities;
 using BankAtm.Service;
@@ -29,11 +30,11 @@ namespace BankAtm.Controllers
         {
             if(accountDTO.CardNo.Length!=16)
             {
-                return StatusCode(201, new JsonResult("Card length must be 16 digits"));
+                return StatusCode(201, new CardNumLength());
             }
             if (accountDTO.AtmPin.Length != 4)
             {
-                return StatusCode(201, new JsonResult("Pin must be 4 digits"));
+                return StatusCode(201, new PinLength());
             }
             Account account = new Account()
             {
@@ -52,7 +53,7 @@ namespace BankAtm.Controllers
                 return StatusCode(200, accountDetails);
             }catch(DbUpdateException ex)
             {
-                return StatusCode(201, new JsonResult("Invalid Customer Id"));
+                return StatusCode(201, new CustomerExceptions());
             }
             
         }
@@ -71,7 +72,7 @@ namespace BankAtm.Controllers
             Account account = _accountService.GetAccountByAccNo(accNo);
             if (account == null)
             {
-                return StatusCode(201, new JsonResult("Account doesn't exists"));
+                return StatusCode(201, new InvalidAccNum());
             }
             else return StatusCode(200, account.Balance);
         }
@@ -80,7 +81,7 @@ namespace BankAtm.Controllers
         public IActionResult GetAccountbyAccNo(long AccNo)
         {
             Account account = _accountService.GetAccountByAccNo(AccNo);
-            if(account==null) return StatusCode(201, new JsonResult("No account with this Account Number"));
+            if(account==null) return StatusCode(201, new InvalidAccNum());
             AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
             return StatusCode(200, accountDetails);
         }
@@ -93,7 +94,7 @@ namespace BankAtm.Controllers
                 _accountService.DeleteAccount(AccNo);
                 return StatusCode(200, new JsonResult("Deleted"));
             }
-            catch (Exception ex) { return StatusCode(201, new JsonResult("No such account number exists")); }
+            catch (Exception ex) { return StatusCode(201, new InvalidAccNum()); }
         }
 
         [HttpGet, Route("GetAllAccounts")]
@@ -114,15 +115,19 @@ namespace BankAtm.Controllers
             Account account = _accountService.GetAccountByAccNo(changePinDTO.AccNum);
             if(account==null)
             {
-                return StatusCode(201, new JsonResult("Invalid Account Number"));
+                return StatusCode(201, new InvalidAccNum());
             }
             Account acc = _accountService.GetAccountByCardNum(changePinDTO.CardNo);
             if (acc == null)
             {
-                return StatusCode(201, new JsonResult("Invalid Card Number"));
+                return StatusCode(201, new InvalidCardNum());
             }
             if(account.AtmPin.Equals(changePinDTO.AtmPin)==false) {
-                return StatusCode(201, new JsonResult("wrong pin"));
+                return StatusCode(201, new InvalidPin());
+            }
+            if (changePinDTO.NewPin.Length != 4)
+            {
+                return StatusCode(201, new PinLength());
             }
             account.AtmPin = changePinDTO.NewPin;
             _accountService.UpdateAccountDetails(account);
@@ -136,7 +141,7 @@ namespace BankAtm.Controllers
             Account account = _accountService.GetAccountByAccNo(userStatus.AccNum);
             if(account==null)
             {
-                return StatusCode(201, new JsonResult("Invalid Account Number"));
+                return StatusCode(201, new InvalidAccNum());
             }
             else
             {
