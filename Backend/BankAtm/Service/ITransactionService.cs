@@ -10,7 +10,7 @@ namespace BankAtm.Service
         List<Transaction> GetTransactionByType(string transtype);
         List<Transaction> GetTransactionByAccNo(long accNo);
         Transaction GetTransactionByTransId(Guid TransId);
-        void UpdateTransaction(Transaction transaction);
+       
         void DeleteTransaction(string TransId);
     }
 }

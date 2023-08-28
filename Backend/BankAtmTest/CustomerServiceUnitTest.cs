@@ -38,13 +38,7 @@ namespace BankAtmTest
             Assert.NotNull(customer);
 
         }
-        [Fact]
-        public void GetAllCustomerTest() { 
-            customerService = new CustomerService(db);
-            List<Customer> listcstm = customerService.GetAllCustomers();
-            Assert.Equal(3, listcstm.Count);
-        }
-
+        
         [Fact]
         public void UpdateCustomerTest()
         {

@@ -77,7 +77,7 @@ export default function AddCustomer()
   
           {
           
-            NotificationManager.error(response.data.value, "Error", 4000);
+            NotificationManager.error(response.data.message, "Error", 4000);
           }
   
   

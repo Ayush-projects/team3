@@ -55,9 +55,5 @@ namespace BankAtm.Service
             return _transactionContext.Transactions.Find(TransId);
         }
 
-        public void UpdateTransaction(Transaction transaction)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

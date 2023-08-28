@@ -88,18 +88,10 @@ namespace BankAtm.Controllers
                     }
                     else
                     {
-                        Account Toacc = _accountService.GetAccountByAccNo(transactionDTO.AccNum1);
-                        if (Toacc == null)
-                        {
-                            throw new InvalidAccNum();
-                        }
-                        if (Toacc.AccStatus == 0)
-                        {
-                            throw new Exception("Account is disabled");
-                        }
-                        Toacc.Balance = Toacc.Balance + transactionDTO.Amount;
                         
-                        _accountService.UpdateAccountDetails(Toacc);
+                        acc.Balance = acc.Balance + transactionDTO.Amount;
+                        
+                        _accountService.UpdateAccountDetails(acc);
 
                     }
                    
@@ -137,13 +129,13 @@ namespace BankAtm.Controllers
             try
             {
 
-                if (transtype.Equals("deposite") == true || transtype.Equals("withdraw") == true)
+                if (transtype.Equals("deposit") == true || transtype.Equals("withdraw") == true)
                 {
                     List<Transaction> transactions = _transactionService.GetTransactionByType(transtype);
                     List<TransactionDetailsDTO> details = _mapper.Map<List<TransactionDetailsDTO>>(transactions);
                     return StatusCode(200, details);
                 }
-                return StatusCode(201, new JsonResult("Enter 'deposite' or 'withdraw'"));
+                return StatusCode(201, new JsonResult("Enter 'deposit' or 'withdraw'"));
 
             }
             catch (Exception ex) { throw; }
