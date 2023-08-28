@@ -80,71 +80,19 @@ namespace BankAtm.Controllers
             }
             catch (Exception ex) { return StatusCode(201,new CustomerExceptions()); }
         }
-        [HttpPut, Route("UpdateCustomerEmail")]
-        public IActionResult UpdateCustEmail(CustomerEmail customeremail)
-        {
-            
-            Customer customer = _customerService.GetCustomerById(customeremail.Id);
-            if(customer != null )
-            {
-                try
-                {
-                    customer.Email = customeremail.Email;
-                   
-                    _customerService.UpdateCustomer(customer);
 
-                    CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
-                    return StatusCode(200, customerDetails);
-
-                }
-                catch(DbUpdateException ex)
-                {
-                    return StatusCode(201, new EmailIdException());
-                }
-            }
-            else
-            {
-                return StatusCode(201,new CustomerExceptions());
-            }
-        }
-
-        [HttpPut, Route("UpdateCustomerAddress")]
-        public IActionResult UpdateCustAddress(CustomerAddress customeraddress)
+        [HttpPut, Route("UpdateCustomer")]
+        public IActionResult UpdateCustomer(UpdateCustomer updt)
         {
 
-            Customer customer = _customerService.GetCustomerById(customeraddress.Id);
+            Customer customer = _customerService.GetCustomerById(updt.Id);
             if (customer != null)
             {
                 try
                 {
-                    customer.Address = customeraddress.Address;
-
-                    _customerService.UpdateCustomer(customer);
-                    CustomerDetailsDTO customerDetails = _mapper.Map<CustomerDetailsDTO>(customer);
-                    return StatusCode(200, customerDetails);
-
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(201, new JsonResult("Coudn't update address"));
-                }
-            }
-            else
-            {
-                return StatusCode(201, new CustomerExceptions());
-            }
-        }
-
-        [HttpPut, Route("UpdateCustomerContactNo")]
-        public IActionResult UpdateCustContactNo(CustomerContNo customercontno)
-        {
-
-            Customer customer = _customerService.GetCustomerById(customercontno.Id);
-            if (customer != null)
-            {
-                try
-                {
-                    customer.ContactNo = customercontno.ContactNo;
+                    customer.ContactNo = updt.ContactNo;
+                    customer.Address = updt.Address;
+                    customer.Email = updt.Email;
 
                     _customerService.UpdateCustomer(customer);
 
@@ -154,7 +102,7 @@ namespace BankAtm.Controllers
                 }
                 catch (Exception ex)
                 {
-                    return StatusCode(201, new JsonResult("Couldn't update contact number"));
+                    return StatusCode(201, new JsonResult("Couldn't update customer details"));
                 }
             }
             else

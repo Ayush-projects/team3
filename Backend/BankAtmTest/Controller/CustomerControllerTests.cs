@@ -63,47 +63,15 @@ namespace BankAtmTest.Controller
         }
 
         [Fact]
-        public void CustomerController_UpdateCustomer_Email()
+        public void CustomerController_UpdateCustomer()
         {
             //Arrange
             Customer customer = SetupUpdateCustomer();
-            var customerEmail = new Mock<CustomerEmail>();
+            var updt = new Mock<UpdateCustomer>();
 
             //Act
             var controller = new CustomerController(_customerService.Object, _mapper.Object);
-            var result = controller.UpdateCustEmail(customerEmail.Object);
-
-            //Assert
-            AssertUpdateCustomer();
-            Assert.NotNull(result);
-        }
-
-        [Fact]
-        public void CustomerController_UpdateCustomer_Contact()
-        {
-            //Arrange
-            Customer customer = SetupUpdateCustomer();
-            var customerContact = new Mock<CustomerContNo>();
-
-            //Act
-            var controller = new CustomerController(_customerService.Object, _mapper.Object);
-            var result = controller.UpdateCustContactNo(customerContact.Object);
-
-            //Assert
-            AssertUpdateCustomer();
-            Assert.NotNull(result);
-        }
-
-        [Fact]
-        public void CustomerController_UpdateCustomer_Address()
-        {
-            //Arrange
-            Customer customer = SetupUpdateCustomer();
-            var customerAddress = new Mock<CustomerAddress>();
-
-            //Act
-            var controller = new CustomerController(_customerService.Object, _mapper.Object);
-            var result = controller.UpdateCustAddress(customerAddress.Object);
+            var result = controller.UpdateCustomer(updt.Object);
 
             //Assert
             AssertUpdateCustomer();
