@@ -32,7 +32,7 @@ function Nav() {
                 <li className="nav-item"><a className="nav-link" href="/dashboard">Dashboard</a></li>
                 <li className="nav-item"><a className="nav-link" href="/about">About</a></li>
                 <li className="nav-item"><a className="nav-link" href="/service">Service</a></li>
-                <li className="nav-item"><a className="nav-link" href="/contact">Contact</a></li>
+              
                 {isLoggedIn === "true" ? (
                   <li className="nav-item"><a href="#" onClick={handleLogout} className="btn btn-primary">Logout</a></li>
                 ) : (
