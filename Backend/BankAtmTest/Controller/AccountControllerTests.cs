@@ -30,6 +30,7 @@ namespace BankAtmTest.Controller
                 AtmPin = "4536",
                 CardName = "Aditya Jindal",
                 CardNo = "1000001000000001",
+                AccStatus = 1
             };
             return acc;
         }
@@ -96,6 +97,7 @@ namespace BankAtmTest.Controller
                 AccStatus = "Enable"
             };
             Account acc = GetDummyAccount(accNo);
+            acc.AccStatus = 0;
             
             SetupAccountUpdate(accNo, acc);
 
