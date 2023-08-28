@@ -74,6 +74,10 @@ namespace BankAtm.Controllers
             {
                 return StatusCode(201, new InvalidAccNum());
             }
+            if(account.AccStatus==0)
+            {
+                return StatusCode(201, new AccountDisabled());
+            }
             else return StatusCode(200, account.Balance);
         }
 
@@ -81,7 +85,10 @@ namespace BankAtm.Controllers
         public IActionResult GetAccountbyAccNo(long AccNo)
         {
             Account account = _accountService.GetAccountByAccNo(AccNo);
-            if(account==null) return StatusCode(201, new InvalidAccNum());
+            if (account == null)
+            {
+                return StatusCode(201, new InvalidAccNum());
+            }
             AccountDetailsDTO accountDetails = _mapper.Map<AccountDetailsDTO>(account);
             return StatusCode(200, accountDetails);
         }
@@ -122,12 +129,20 @@ namespace BankAtm.Controllers
             {
                 return StatusCode(201, new InvalidCardNum());
             }
+            if(account.AccStatus==0)
+            {
+                return StatusCode(201, new AccountDisabled());
+            }
             if(account.AtmPin.Equals(changePinDTO.AtmPin)==false) {
                 return StatusCode(201, new InvalidPin());
             }
             if (changePinDTO.NewPin.Length != 4)
             {
                 return StatusCode(201, new PinLength());
+            }
+            if (account.AtmPin.Equals(changePinDTO.NewPin) == true)
+            {
+                return StatusCode(201, new SamePinException());
             }
             account.AtmPin = changePinDTO.NewPin;
             _accountService.UpdateAccountDetails(account);
@@ -143,14 +158,25 @@ namespace BankAtm.Controllers
             {
                 return StatusCode(201, new InvalidAccNum());
             }
+           
+
             else
             {
                 if(userStatus.AccStatus.Equals("Disable"))
                 {
+                    if(account.AccStatus==0)
+                    {
+                        return StatusCode(201, new AlreadyDisabled());
+                    }
                     account.AccStatus = 0;
                 }
                 else
                 {
+
+                    if (account.AccStatus == 1)
+                    {
+                        return StatusCode(201, new AlreadyEnabled());
+                    }
                     account.AccStatus= 1;
                 }
                 _accountService.UpdateAccountDetails(account);
