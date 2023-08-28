@@ -28,6 +28,41 @@ export default function UpdateDetails()
         })
     }
 
+    const handleSubmit1 = (event)=>{
+      event.preventDefault()
+       let id = prompt("Enter customer id")
+       if(id=="")
+       {
+        return   NotificationManager.error("Please enter customer id", "Error", 4000);
+       }
+
+      
+
+       axios.get("https://localhost:5000/api/Customer/GetCustomerById?id="+ id ,{ headers: {
+        'Authorization': 'Bearer '+ token
+      }})
+      .then((response) => {  
+          console.log(response)
+        if(response.status==200)
+        {
+            
+              NotificationManager.success("Data Fetched Successfully", "Success", 2000);
+
+               setFormData({email: response.data.email, contactNum: response.data.contactNo, id, address: response.data.address})
+         
+          
+        }
+        else
+        {
+        
+          NotificationManager.error("No customer found with given customer id", "Error", 4000);
+        }
+      } ).catch((err)=>{
+       console.log(err.response)
+        NotificationManager.error(JSON.stringify(err.response.data.errors), "Error", 4000);
+      });
+    }
+
     const handleSubmit = (event) =>{
    console.log(event.target.value)
    let param = event.target.value
@@ -138,6 +173,15 @@ export default function UpdateDetails()
         
     <form>
         <div>
+
+        <div class="mb-3 col">
+
+             <div class="d-grid gap-2 col-6 mx-auto incmar">
+            <button type="submit" class="btn btn-primary" value ='upd num' onClick={handleSubmit1}>Fetch Details</button>
+            </div>
+            
+        </div>
+          
         <div class="col ">
             <label for="ID" class="form-label">Email</label>
             <input type="text" class="form-control "  id="email"

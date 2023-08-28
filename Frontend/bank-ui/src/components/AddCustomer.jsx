@@ -16,6 +16,7 @@ export default function AddCustomer()
         address : '',
         email : '',
         contactNo : '',
+        address1: ''
       
     });
 
@@ -41,7 +42,7 @@ export default function AddCustomer()
 
         if(!formData.email.includes('@'))
         return NotificationManager.error("Please put email in correct format","Error",4000);
-          let {email, name, address, contactNo} = formData
+          let {email, name, address, contactNo, address1} = formData
 
    let token = localStorage.getItem("token")
    if(!token)
@@ -57,7 +58,7 @@ export default function AddCustomer()
         
    }
 
-        axios.post("https://localhost:5000/api/Customer/AddCustomer",{name, email, address, contactNo},{ headers: {
+        axios.post("https://localhost:5000/api/Customer/AddCustomer",{name, email, address: address + address1, contactNo},{ headers: {
         
           'Authorization': 'Bearer '+ token
         }})
@@ -117,12 +118,20 @@ export default function AddCustomer()
              />
         </div>
 
-        <div class="col w-50">
+        <div class="col">
             <label for="Address" class="form-label">Address</label>
             <input type="text" class="form-control " id="Address" 
             onChange={handleInputChange}
             name = "address"
             value = {formData.address}
+            placeholder="Address Line 1"
+            />
+            <br></br>
+             <input type="text" class="form-control " id="Address" 
+            onChange={handleInputChange}
+            name = "address1"
+            value = {formData.address1}
+            placeholder="Address Line 2"
             />
         </div>
         </div>
